@@ -27,7 +27,7 @@ export function SiteFooter() {
             {t("nav.chat")}
           </a>
         </div>
-        <ul className="space-y-3 lg:col-span-3 lg:col-start-10">
+        <ul data-reveal style={{ "--i": 2 } as React.CSSProperties} className="space-y-3 lg:col-span-3 lg:col-start-10">
           <li>
             <a href={whatsappLink(t("cta.msg.greeting"))} target="_blank" rel="noreferrer" className="tabular hover:text-lime">
               WhatsApp {CONTACT.whatsappDisplay}

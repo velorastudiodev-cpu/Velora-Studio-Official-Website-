@@ -193,6 +193,7 @@ export function BookingPlate({ mode, label, fit }: { mode: PlateMode; label: str
                 width={116}
                 height={76}
                 rx={6}
+                className={lock ? "slot-hold" : undefined}
                 fill={lock ? "var(--lime)" : taken ? "#1c1b1e" : "none"}
                 stroke={lock || taken ? "none" : "#555553"}
                 strokeWidth={2}
@@ -338,7 +339,8 @@ const MAX_PER_PORTER = 20;
 
 const mdpl = (n: number) => n.toLocaleString("id-ID");
 
-export function TrailPlate({ label, fit }: { label: string; fit?: Fit }) {
+/** `drawIn` draws the route as it scrolls into view (only outside the hero, whose frame cannot scroll). */
+export function TrailPlate({ label, fit, drawIn = false }: { label: string; fit?: Fit; drawIn?: boolean }) {
   const x0 = 120;
   const x1 = 1080;
   const yTop = 150;
@@ -360,7 +362,7 @@ export function TrailPlate({ label, fit }: { label: string; fit?: Fit }) {
         Jalur Sembalun ke Puncak Rinjani
       </text>
       <polygon points={`${x0},${yBase} ${line} ${x1},${yBase}`} fill="var(--violet)" />
-      <polyline points={line} fill="none" stroke="var(--ink)" strokeWidth={4} strokeLinejoin="round" />
+      <polyline points={line} fill="none" stroke="var(--ink)" strokeWidth={4} strokeLinejoin="round" pathLength={1} className={drawIn ? "draw-in" : undefined} />
       {pts.map((p, i) => {
         const right = i === pts.length - 1;
         return (

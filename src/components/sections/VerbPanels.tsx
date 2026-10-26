@@ -63,7 +63,7 @@ const STAGES: Record<DisciplinePillar, { ground: string; ink: string; muted: str
     ground: "bg-paper",
     ink: "text-ink",
     muted: "text-muted",
-    plate: (label) => <TrailPlate label={label} />,
+    plate: (label) => <TrailPlate label={label} drawIn />,
   },
 };
 
@@ -99,7 +99,7 @@ export function VerbPanels() {
                 </p>
               </div>
               <figure data-reveal style={{ "--i": 2 } as React.CSSProperties} className="m-0 lg:col-span-7">
-                <div className="relative aspect-video overflow-hidden rounded-[4px]">{s.plate(l(p.title))}</div>
+                <div className="relative aspect-video overflow-clip rounded-[4px]">{s.plate(l(p.title))}</div>
               </figure>
             </div>
           </article>

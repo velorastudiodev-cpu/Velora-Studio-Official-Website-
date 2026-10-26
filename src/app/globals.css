@@ -216,6 +216,58 @@
   animation: plate-drop 900ms var(--ease-out);
 }
 
+/* QRIS slot held while payment runs: a slow breath, not a blink. */
+@keyframes slot-hold {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.slot-hold {
+  animation: slot-hold 1.8s ease-in-out infinite;
+}
+
+/*
+  Scroll-linked and compositor-only: no script runs per frame. Browsers without scroll timelines
+  show the still picture. Their ancestors use overflow: clip, since overflow: hidden would become the
+  timeline's scroll container and freeze it.
+*/
+@keyframes drift {
+  from {
+    translate: 0 -3%;
+  }
+  to {
+    translate: 0 3%;
+  }
+}
+
+@keyframes draw-in {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .drift {
+    animation: drift linear both;
+    animation-timeline: view();
+  }
+  .draw-in {
+    stroke-dasharray: 1;
+    animation: draw-in linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot-hold,
+  .drift,
+  .draw-in {
+    animation: none !important;
+  }
+}
+
 /* Data flowing along an edge (blueprint diagram). */
 @keyframes edge-flow {
   to {

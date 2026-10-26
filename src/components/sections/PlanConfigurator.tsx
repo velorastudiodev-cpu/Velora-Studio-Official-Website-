@@ -57,7 +57,7 @@ export function PlanConfigurator() {
               {t("plan.intro")}
             </p>
 
-            <fieldset className="mt-12">
+            <fieldset data-reveal style={{ "--i": 2 } as React.CSSProperties} className="mt-12">
               <legend className={legend}>{t("plan.type")}</legend>
               <div role="radiogroup" aria-label={t("plan.type")} className="mt-3 grid gap-1">
                 {TYPES.map((id) => (
@@ -79,7 +79,7 @@ export function PlanConfigurator() {
               </div>
             </fieldset>
 
-            <fieldset className="mt-10">
+            <fieldset data-reveal style={{ "--i": 3 } as React.CSSProperties} className="mt-10">
               <legend className={legend}>{t("plan.pillars")}</legend>
               <div className="mt-3 grid grid-cols-2 gap-1">
                 {pillars.map((p) => {
@@ -103,7 +103,7 @@ export function PlanConfigurator() {
               </div>
             </fieldset>
 
-            <fieldset className="mt-10">
+            <fieldset data-reveal style={{ "--i": 4 } as React.CSSProperties} className="mt-10">
               <legend className={legend}>{t("plan.timeline")}</legend>
               <div role="radiogroup" aria-label={t("plan.timeline")} className="mt-3 grid grid-cols-3 gap-1">
                 {TIMELINES.map((id) => (
@@ -121,7 +121,7 @@ export function PlanConfigurator() {
               </div>
             </fieldset>
 
-            <div className="mt-10 grid gap-5">
+            <div data-reveal style={{ "--i": 5 } as React.CSSProperties} className="mt-10 grid gap-5">
               <label className="block">
                 <span className={legend}>{t("plan.name")}</span>
                 <input value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" className={field} />
