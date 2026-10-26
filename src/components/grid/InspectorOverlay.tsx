@@ -33,7 +33,7 @@ function measure(el: HTMLElement): Measure {
 
 const band = "absolute bg-[color-mix(in_srgb,var(--inspector-redline)_16%,transparent)]";
 const tag =
-  "absolute whitespace-nowrap bg-redline px-1 font-mono text-[10px] leading-[15px] text-[#09090B] tabular";
+  "absolute whitespace-nowrap bg-redline px-1.5 text-[12px] leading-[18px] text-white tabular [font-family:var(--font-code)]";
 
 export function InspectorOverlay() {
   const { enabled } = useInspector();
@@ -125,7 +125,7 @@ export function InspectorOverlay() {
               </span>
             </div>
           )}
-          <p className="absolute bottom-4 left-4 right-4 w-fit max-w-[calc(100%-2rem)] border border-redline bg-primary px-3 py-2 font-mono text-[11px] uppercase tracking-[0.08em] text-ink">
+          <p className="absolute bottom-4 left-4 right-4 w-fit max-w-[calc(100%-2rem)] bg-redline px-3 py-2 text-[14px] text-white">
             {t("inspector.hud")}
           </p>
         </motion.div>

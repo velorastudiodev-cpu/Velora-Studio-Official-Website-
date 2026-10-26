@@ -98,14 +98,6 @@ export const CapabilityPillarSchema = z.object({
   benchmarkMetric: z.string(),
 });
 
-export const LedgerEntrySchema = z.object({
-  tag: z.string(),
-  scope: z.union([ProjectIdEnum, z.literal("STUDIO")]),
-  pillars: z.array(DisciplinePillarEnum).min(1),
-  title: LocalizedTextSchema,
-  changes: z.array(LocalizedTextSchema).min(1),
-});
-
 // Every UI string must exist in both languages.
 export const DictionarySchema = z.record(z.string(), LocalizedTextSchema);
 
@@ -131,5 +123,4 @@ export type ProjectId = z.infer<typeof ProjectIdEnum>;
 export type ArchitectureNode = z.infer<typeof ArchitectureNodeSchema>;
 export type ProjectItem = z.infer<typeof ProjectSchema>;
 export type CapabilityPillar = z.infer<typeof CapabilityPillarSchema>;
-export type LedgerEntry = z.infer<typeof LedgerEntrySchema>;
 export type CTAInquiryPayload = z.infer<typeof CTAInquiryPayloadSchema>;

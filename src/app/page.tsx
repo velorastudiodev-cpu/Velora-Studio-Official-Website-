@@ -1,21 +1,20 @@
-import { BlueprintGrid } from "@/components/grid/BlueprintGrid";
-import { DisciplineMatrix } from "@/components/sections/DisciplineMatrix";
-import { EngineeringLedger } from "@/components/sections/EngineeringLedger";
-import { HeroTelemetry } from "@/components/sections/HeroTelemetry";
-import { ProjectMatrix } from "@/components/sections/ProjectMatrix";
-import { StudioCTAConsole } from "@/components/sections/StudioCTAConsole";
+import { HeroReel } from "@/components/sections/HeroReel";
+import { PlanConfigurator } from "@/components/sections/PlanConfigurator";
+import { SiteFooter } from "@/components/sections/SiteFooter";
+import { VerbPanels } from "@/components/sections/VerbPanels";
+import { WorkPanels } from "@/components/sections/WorkPanels";
 
-// Core User Journey, top to bottom: identity → pillars → flagships → ledger → CTA.
+// The argument, in order: what this is (hero) → proof (work) → how (verbs) → your project (plan + band) → close.
 export default function Home() {
   return (
-    <main>
-      <BlueprintGrid>
-        <HeroTelemetry />
-        <DisciplineMatrix />
-        <ProjectMatrix />
-        <EngineeringLedger />
-        <StudioCTAConsole apiEnabled={Boolean(process.env.RESEND_API_KEY)} />
-      </BlueprintGrid>
-    </main>
+    <>
+      <main>
+        <HeroReel />
+        <WorkPanels />
+        <VerbPanels />
+        <PlanConfigurator />
+      </main>
+      <SiteFooter />
+    </>
   );
 }

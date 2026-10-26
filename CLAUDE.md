@@ -28,10 +28,23 @@ deviation and why in the phase report.
 - *.vercel.app is blocked by this cloud environment's network policy: no live-site screenshots or
   Lighthouse runs yet.
 
+## Phase 5: full redesign (owner asked to leave the PRD look entirely)
+- Run with the design-taste-frontend skill: direction "The pinned poster" (seed 1438855402), Archivo
+  (wdth 62 for display), palette mapped from the brand instead of the dealt bubblegum/lime: neutral paper
+  #F0F0EF, ink #0B0B0C, logo violet #5A4CC8 as a full field (never a tint), lime #DEF915 for the action only.
+- Idea: the logo's two arms (outline + solid) = "Dari sketsa sampai server"; the hero reel goes from the
+  wireframe to the built screen. Live thing: the plan configurator (solid squares = first release).
+- Pictures are drawn plates (src/components/plates/Plates.tsx, data-ui roots) because the open image
+  collections and *.vercel.app are unreachable here; replace with real screenshots when the owner sends them.
+- Removed: telemetry hero, pillar matrix, token lab, ledger, theme toggle, grid lines, mono labels.
+  Kept: CLI (~), Cmd+K, Alt+I inspector, blueprint calculator, /api/inquiry.
+- Gate: taste lint 0 FAIL; inspect.mjs (CHROME_PATH needs a --no-sandbox wrapper as root) 0 FAIL,
+  2 WARN (no real photos / no footage).
+
 ## Owner's live projects (wire in at the project-matrix stage)
 - VEL-001 client web: https://ikbar-barbershop.vercel.app
 - VEL-002 CMS dashboard: https://ikbar-barbershop-5rx3.vercel.app/dashboard
 - VEL-003 porter platform: https://dzikri-mount-guide.vercel.app
 
 ## Gates (every phase)
-`npx tsc --noEmit` · `npm run lint` · `npm run build` — all must exit 0.
+`npx tsc --noEmit` · `npm run lint` · `npm test` · `npm run build` — all must exit 0.

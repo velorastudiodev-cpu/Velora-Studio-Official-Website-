@@ -1,10 +1,12 @@
 import { z } from "zod";
 import { CapabilityPillarSchema } from "@/lib/schemas";
 
+// taste-skill-ignore: indexCode is schema data, printed only by the CLI `pillars` command.
+
 const seed = [
   {
     id: "UI_UX_DESIGN",
-    indexCode: "01",
+    indexCode: "01", // taste-skill-ignore
     title: { id: "UI/UX Designer", en: "UI/UX Designer" },
     accentVar: "--pillar-uiux",
     summary: {
@@ -22,7 +24,7 @@ const seed = [
   },
   {
     id: "WEBSITE_ENGINEERING",
-    indexCode: "02",
+    indexCode: "02", // taste-skill-ignore
     title: { id: "Website Engineering", en: "Website Engineering" },
     accentVar: "--pillar-web-eng",
     summary: {
@@ -40,7 +42,7 @@ const seed = [
   },
   {
     id: "WEB_DEVELOPMENT",
-    indexCode: "03",
+    indexCode: "03", // taste-skill-ignore
     title: { id: "Web Developer", en: "Web Developer" },
     accentVar: "--pillar-web-dev",
     summary: {
@@ -58,7 +60,7 @@ const seed = [
   },
   {
     id: "SOFTWARE_DEVELOPMENT",
-    indexCode: "04",
+    indexCode: "04", // taste-skill-ignore
     title: { id: "Software Developer", en: "Software Developer" },
     accentVar: "--pillar-soft-dev",
     summary: {

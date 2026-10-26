@@ -9,7 +9,6 @@ import {
   Languages,
   Mail,
   MessageCircle,
-  Moon,
   RefreshCw,
   ScanLine,
   SquareTerminal,
@@ -17,35 +16,27 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { NAV_LINKS } from "@/components/sections/SiteNav";
 import { useInspector } from "@/context/InspectorContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { usePillarFilter } from "@/context/PillarFilterContext";
 import { CONTACT, whatsappLink } from "@/data/contact";
 import type { DictionaryKey } from "@/data/dictionaries";
-import { pillars } from "@/data/pillars";
 import { projects } from "@/data/projects";
 import { emit, useVeloraEvent } from "@/lib/events";
 import { LocaleEnum } from "@/lib/schemas";
 import { SPRING } from "@/lib/utils";
 
-const NAV: [string, DictionaryKey][] = [
-  ["#top", "nav.hero"],
-  ["#pillars", "nav.pillars"],
-  ["#lab", "nav.lab"],
-  ["#projects", "nav.projects"],
-  ["#ledger", "nav.ledger"],
-  ["#cta", "nav.cta"],
-];
+const NAV: [string, DictionaryKey][] = [["#top", "nav.home"], ...NAV_LINKS];
 
 const item =
-  "flex h-10 cursor-pointer items-center gap-3 px-3 text-sm text-secondary data-[selected=true]:bg-elevated data-[selected=true]:text-ink data-[selected=true]:shadow-[inset_2px_0_0_var(--velora-pink)]";
+  "flex min-h-11 cursor-pointer items-center gap-3 px-4 text-[15px] text-ink data-[selected=true]:bg-ink data-[selected=true]:text-paper";
 const group =
-  "[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pb-1 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:font-mono [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-[0.08em] [&_[cmdk-group-heading]]:text-accent-text";
+  "[&_[cmdk-group-heading]]:px-4 [&_[cmdk-group-heading]]:pb-1 [&_[cmdk-group-heading]]:pt-4 [&_[cmdk-group-heading]]:text-[13px] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted";
 
 function Item({ icon: Icon, onSelect, children }: { icon: LucideIcon; onSelect: () => void; children: React.ReactNode }) {
   return (
     <Command.Item onSelect={onSelect} className={item}>
-      <Icon size={15} strokeWidth={1.5} aria-hidden className="shrink-0" />
+      <Icon size={16} strokeWidth={1.5} aria-hidden className="shrink-0" />
       {children}
     </Command.Item>
   );
@@ -54,7 +45,6 @@ function Item({ icon: Icon, onSelect, children }: { icon: LucideIcon; onSelect: 
 export function CommandMenu() {
   const { t, l, setLocale } = useLanguage();
   const inspector = useInspector();
-  const { setActive } = usePillarFilter();
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const returnFocus = useRef<HTMLElement | null>(null);
@@ -102,7 +92,7 @@ export function CommandMenu() {
       {open && (
         <motion.div
           key="cmdk"
-          className="fixed inset-0 z-[80] flex items-start justify-center bg-[color-mix(in_srgb,var(--bg-primary)_70%,transparent)] px-4 pt-[12vh]"
+          className="fixed inset-0 z-[80] flex items-start justify-center bg-ink/50 px-4 pt-[12vh]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -113,7 +103,7 @@ export function CommandMenu() {
             role="dialog"
             aria-modal="true"
             aria-label={t("cmdk.title")}
-            className="w-full max-w-[560px] border border-velora-purple bg-surface shadow-[0_24px_64px_rgb(0_0_0/0.45)]"
+            className="w-full max-w-[560px] bg-paper shadow-[0_24px_64px_rgb(0_0_0/0.35)]" // taste-skill-ignore: a dialog floats
             initial={{ y: -16, scale: 0.98 }}
             animate={{ y: 0, scale: 1 }}
             exit={{ y: -16, scale: 0.98 }}
@@ -127,10 +117,10 @@ export function CommandMenu() {
               <Command.Input
                 autoFocus
                 placeholder={t("cmdk.placeholder")}
-                className="h-12 w-full border-b border-hairline bg-transparent px-4 text-sm text-ink outline-none placeholder:text-muted"
+                className="h-14 w-full bg-paper-2 px-4 text-[16px] text-ink outline-none placeholder:text-muted"
               />
               <Command.List className="max-h-[min(60vh,420px)] overflow-y-auto pb-2">
-                <Command.Empty className="px-4 py-6 text-sm text-secondary">{t("cmdk.empty")}</Command.Empty>
+                <Command.Empty className="px-4 py-6 text-[15px] text-muted">{t("cmdk.empty")}</Command.Empty>
 
                 <Command.Group heading={t("cmdk.group.navigate")} className={group}>
                   {NAV.map(([hash, key]) => (
@@ -140,42 +130,38 @@ export function CommandMenu() {
                   ))}
                   {projects.map((p) => (
                     <Item key={p.id} icon={Hash} onSelect={run(() => jump(`#${p.slug}`))}>
-                      <span className="tabular font-mono text-xs text-accent-text">{p.id}</span>
                       {l(p.title).split(" — ")[0]}
                     </Item>
                   ))}
                 </Command.Group>
 
                 <Command.Group heading={t("cmdk.group.actions")} className={group}>
-                  <Item icon={ScanLine} onSelect={run(inspector.toggle)}>
-                    {t("cmdk.action.inspector")}
+                  <Item icon={MessageCircle} onSelect={run(() => window.open(whatsappLink(t("cta.msg.greeting")), "_blank", "noopener"))}>
+                    {t("cmdk.action.whatsapp")}, {CONTACT.whatsappDisplay}
                   </Item>
-                  <Item icon={Moon} onSelect={run(() => emit("velora:theme"))}>
-                    {t("cmdk.action.theme")}
-                  </Item>
-                  <Item icon={SquareTerminal} onSelect={run(() => emit("velora:terminal"))}>
-                    {t("cmdk.action.terminal")}
+                  <Item icon={copied ? Check : Mail} onSelect={copyEmail}>
+                    {copied ? t("cmdk.copied") : `${t("cmdk.action.email")}, ${CONTACT.email}`}
                   </Item>
                   <Item
                     icon={RefreshCw}
                     onSelect={run(() => {
-                      jump("#projects");
+                      jump("#ikbar-barbershop-dashboard");
                       emit("velora:sync-demo");
                     })}
                   >
                     {t("cmdk.action.sync")}
                   </Item>
-                  <Item icon={MessageCircle} onSelect={run(() => window.open(whatsappLink(t("cta.msg.greeting")), "_blank", "noopener"))}>
-                    {t("cmdk.action.whatsapp")} · {CONTACT.whatsappDisplay}
+                  <Item icon={ScanLine} onSelect={run(inspector.toggle)}>
+                    {t("cmdk.action.inspector")}
                   </Item>
-                  <Item icon={copied ? Check : Mail} onSelect={copyEmail}>
-                    {copied ? t("cmdk.copied") : `${t("cmdk.action.email")} · ${CONTACT.email}`}
+                  <Item icon={SquareTerminal} onSelect={run(() => emit("velora:terminal"))}>
+                    {t("cmdk.action.terminal")}
                   </Item>
                   {projects.map(
                     (p) =>
                       p.links.liveDemo && (
                         <Item key={p.id} icon={ArrowUpRight} onSelect={run(() => window.open(p.links.liveDemo, "_blank", "noopener"))}>
-                          {t("cmdk.action.live")} · {l(p.title).split(" — ")[0]}
+                          {t("cmdk.action.live")}: {l(p.title).split(" — ")[0]}
                         </Item>
                       ),
                   )}
@@ -185,28 +171,6 @@ export function CommandMenu() {
                   {LocaleEnum.options.map((loc) => (
                     <Item key={loc} icon={loc === "id" ? Languages : Globe} onSelect={run(() => setLocale(loc))}>
                       {loc === "id" ? "Bahasa Indonesia" : "English"}
-                    </Item>
-                  ))}
-                </Command.Group>
-
-                <Command.Group heading={t("cmdk.group.pillars")} className={group}>
-                  {[null, ...pillars].map((p) => (
-                    <Item
-                      key={p?.id ?? "all"}
-                      icon={Hash}
-                      onSelect={run(() => {
-                        setActive(p?.id ?? null);
-                        jump("#projects");
-                      })}
-                    >
-                      {p ? (
-                        <>
-                          <span aria-hidden className="size-1.5" style={{ background: `var(${p.accentVar})` }} />
-                          {p.indexCode} {l(p.title)}
-                        </>
-                      ) : (
-                        t("pillars.filter.all")
-                      )}
                     </Item>
                   ))}
                 </Command.Group>

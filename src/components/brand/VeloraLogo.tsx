@@ -23,10 +23,12 @@ type VeloraLogoProps = {
   variant?: "full" | "mark";
   /** Rendered height in px; width follows the fixed aspect ratio (zero CLS). */
   height?: number;
+  /** "mono" draws everything in currentColor, for placement on the violet field. */
+  tone?: "brand" | "mono";
   className?: string;
 };
 
-export function VeloraLogo({ variant = "full", height = 24, className }: VeloraLogoProps) {
+export function VeloraLogo({ variant = "full", height = 24, tone = "brand", className }: VeloraLogoProps) {
   const w = variant === "full" ? FULL_W : MARK_W;
   return (
     <svg
@@ -38,10 +40,16 @@ export function VeloraLogo({ variant = "full", height = 24, className }: VeloraL
       className={className}
     >
       <path d={FRAME} fill="currentColor" fillRule="evenodd" />
-      <path d={BODY} fill="#5A4CC8" />
-      {FACETS.map(([d, fill]) => (
-        <path key={d} d={d} fill={fill} />
-      ))}
+      {tone === "mono" ? (
+        <path d={BODY} fill="currentColor" />
+      ) : (
+        <>
+          <path d={BODY} fill="#5A4CC8" />
+          {FACETS.map(([d, fill]) => (
+            <path key={d} d={d} fill={fill} />
+          ))}
+        </>
+      )}
       {variant === "full" && <path transform="translate(540 275)" d={WORDMARK} fill="currentColor" />}
     </svg>
   );

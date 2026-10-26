@@ -47,19 +47,19 @@ function Banner({ subtitle }: { subtitle: string }) {
         style={{ fontFamily: 'ui-monospace, "DejaVu Sans Mono", Menlo, Consolas, monospace' }}
       >
         {BANNER.map((row, i) => (
-          <span key={i} className={i < 3 ? "block text-velora-lavender" : "block text-velora-pink"}>
+          <span key={i} className={i < 3 ? "block text-[#b9b1f0]" : "block text-violet-ink"}>
             {row}
           </span>
         ))}
       </pre>
-      <VeloraLogo variant="mark" height={44} className="hidden shrink-0 text-ink sm:block" />
+      <VeloraLogo variant="mark" height={44} className="hidden shrink-0 text-paper sm:block" />
       <span className="sr-only">{subtitle}</span>
     </div>
   );
 }
 
-const out = (text: string) => <span className="text-secondary">{text}</span>;
-const err = (text: string) => <span className="text-velora-pink">{text}</span>;
+const out = (text: string) => <span className="text-ink-muted">{text}</span>;
+const err = (text: string) => <span className="text-lime">{text}</span>;
 
 export function TerminalDrawer() {
   const { t, l, setLocale } = useLanguage();
@@ -97,7 +97,7 @@ export function TerminalDrawer() {
   useEffect(() => {
     if (open) {
       returnFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-      if (nextId.current === 0) print(<Banner subtitle={t("topbar.engine")} />, out(`VELORA ${t("topbar.engine")}`), out(t("terminal.welcome")));
+      if (nextId.current === 0) print(<Banner subtitle={t("terminal.engine")} />, out(`VELORA ${t("terminal.engine")}`), out(t("terminal.welcome")));
       inputRef.current?.focus();
     } else {
       returnFocus.current?.focus();
@@ -120,9 +120,9 @@ export function TerminalDrawer() {
     const arg = args.join(" ");
     print(
       <span>
-        <span className="text-velora-pink">velora</span>
-        <span className="text-muted">:~$ </span>
-        <span className="text-ink">{raw}</span>
+        <span className="text-lime">velora</span>
+        <span className="text-ink-muted">:~$ </span>
+        <span className="text-paper">{raw}</span>
       </span>,
     );
     switch (cmd.toLowerCase()) {
@@ -133,8 +133,8 @@ export function TerminalDrawer() {
           <dl className="grid grid-cols-[minmax(0,auto)_1fr] gap-x-6 gap-y-0.5">
             {COMMANDS.map(([c, k]) => (
               <div key={c} className="contents">
-                <dt className="text-velora-lavender">{c}</dt>
-                <dd className="text-secondary">{t(k)}</dd>
+                <dt className="text-[#b9b1f0]">{c}</dt>
+                <dd className="text-ink-muted">{t(k)}</dd>
               </div>
             ))}
           </dl>,
@@ -143,8 +143,8 @@ export function TerminalDrawer() {
         return print(
           ...pillars.map((p) => (
             <span key={p.id}>
-              <span style={{ color: `var(${p.accentVar})` }}>{p.indexCode}</span> <span className="text-ink">{l(p.title)}</span>
-              <span className="text-muted"> — {p.benchmarkMetric}</span>
+              <span style={{ color: `var(${p.accentVar})` }}>{p.indexCode}</span> <span className="text-paper">{l(p.title)}</span>
+              <span className="text-ink-muted"> — {p.benchmarkMetric}</span>
             </span>
           )),
         );
@@ -152,8 +152,8 @@ export function TerminalDrawer() {
         return print(
           ...projects.map((p) => (
             <span key={p.id} className="tabular">
-              <span className="text-velora-lavender">{p.id}</span>{" "}
-              <span className="text-online">{p.status.padEnd(14)}</span> <span className="text-ink">{l(p.title).split(" — ")[0]}</span>
+              <span className="text-[#b9b1f0]">{p.id}</span>{" "}
+              <span className="text-lime">{p.status.padEnd(14)}</span> <span className="text-paper">{l(p.title).split(" — ")[0]}</span>
             </span>
           )),
         );
@@ -161,16 +161,16 @@ export function TerminalDrawer() {
         const p = projects.find((x) => x.id.toLowerCase() === arg.toLowerCase());
         if (!p) return print(err(`${t("terminal.unknownProject")} ${arg || "∅"}`), out(`${t("terminal.usage")} inspect VEL-001`));
         return print(
-          <span className="text-ink">{l(p.title)}</span>,
+          <span className="text-paper">{l(p.title)}</span>,
           out(`${p.status} · ${p.timeline} · ${p.stack.join(", ")}`),
           ...p.metrics.map((m) => (
             <span key={m.label.en}>
-              <span className="tabular text-velora-lavender">{m.value.padEnd(14)}</span>
-              <span className="text-secondary">{l(m.label)}</span>
-              <span className="text-muted"> ({m.delta})</span>
+              <span className="tabular text-[#b9b1f0]">{m.value.padEnd(14)}</span>
+              <span className="text-ink-muted">{l(m.label)}</span>
+              <span className="text-ink-muted"> ({m.delta})</span>
             </span>
           )),
-          <span className="text-secondary">
+          <span className="text-ink-muted">
             {p.architecture.map((n) => `${n.label} [${n.latencyMs}ms]`).join(" → ")}
           </span>,
           ...(p.links.liveDemo ? [out(p.links.liveDemo)] : []),
@@ -178,7 +178,7 @@ export function TerminalDrawer() {
       }
       case "sync-demo":
         print(out(t("terminal.syncing")));
-        jump("#projects");
+        jump("#ikbar-barbershop-dashboard");
         emit("velora:sync-demo");
         return;
       case "lang": {
@@ -192,8 +192,8 @@ export function TerminalDrawer() {
         inspector.setEnabled(arg === "on");
         return print(out(`${t("terminal.inspectorSet")} ${arg}`));
       case "cta":
-        print(out(`${t("terminal.jump")} #cta`));
-        return jump("#cta");
+        print(out(`${t("terminal.jump")} #plan`));
+        return jump("#plan");
       case "clear":
         return setLines([]);
       case "exit":
@@ -205,6 +205,9 @@ export function TerminalDrawer() {
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      // Commands like `cta` close the drawer and hand focus back; without this the same Enter
+      // would then activate whatever button regains focus.
+      e.preventDefault();
       run(input);
       if (input.trim()) setHistory((h) => [...h, input]);
       setInput("");
@@ -231,23 +234,23 @@ export function TerminalDrawer() {
         <motion.div
           role="dialog"
           aria-label={t("terminal.title")}
-          className="fixed inset-x-0 top-0 z-[70] flex h-[min(62vh,540px)] flex-col border-b border-velora-purple bg-primary/95 font-mono text-[13px] backdrop-blur-md"
+          className="fixed inset-x-0 top-0 z-[70] flex h-[min(62vh,540px)] flex-col border-b-4 border-violet bg-ink text-[14px] text-paper [font-family:var(--font-code)]"
           initial={{ y: "-100%" }}
           animate={{ y: 0 }}
           exit={{ y: "-100%" }}
           transition={SPRING.drawer}
         >
-          <div className="mx-auto flex w-full max-w-[var(--grid-max)] items-center justify-between border-x border-b border-hairline px-4 py-2 text-[11px] uppercase tracking-[0.08em] text-secondary">
+          <div className="margin-x flex items-center justify-between bg-white/5 py-2 text-[13px] text-ink-muted">
             <span>
-              {t("terminal.title")} · <span className="normal-case tracking-normal">{t("terminal.hint")}</span>
+              {t("terminal.title")} · {t("terminal.hint")}
             </span>
-            <button type="button" onClick={() => setOpen(false)} aria-label={t("terminal.close")} className="p-1 hover:text-ink">
+            <button type="button" onClick={() => setOpen(false)} aria-label={t("terminal.close")} className="p-1 hover:text-paper">
               <X size={14} strokeWidth={1.5} aria-hidden />
             </button>
           </div>
           <div
             ref={scrollRef}
-            className="mx-auto w-full max-w-[var(--grid-max)] flex-1 space-y-1 overflow-y-auto border-x border-hairline px-4 py-3"
+            className="margin-x flex-1 space-y-1 overflow-y-auto py-3"
             onClick={() => inputRef.current?.focus()}
             aria-live="polite"
           >
@@ -257,8 +260,8 @@ export function TerminalDrawer() {
               </div>
             ))}
             <label className="flex items-center gap-0">
-              <span className="text-velora-pink">velora</span>
-              <span className="text-muted">:~$&nbsp;</span>
+              <span className="text-lime">velora</span>
+              <span className="text-ink-muted">:~$&nbsp;</span>
               <input
                 ref={inputRef}
                 value={input}
@@ -268,7 +271,7 @@ export function TerminalDrawer() {
                 autoComplete="off"
                 autoCapitalize="off"
                 spellCheck={false}
-                className="flex-1 bg-transparent text-ink caret-velora-pink outline-none"
+                className="flex-1 bg-transparent text-paper caret-lime outline-none"
               />
             </label>
           </div>

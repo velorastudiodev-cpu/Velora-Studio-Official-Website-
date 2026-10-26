@@ -14,55 +14,6 @@ export const SPRING = {
   node: { type: "spring", stiffness: 520, damping: 34, mass: 0.6 },
 } as const;
 
-/** HH:MM:SS in Indonesia Western Time (UTC+7), independent of the visitor's timezone. */
-export function formatWIB(date: Date): string {
-  const t = new Date(date.getTime() + 7 * 3_600_000);
-  return [t.getUTCHours(), t.getUTCMinutes(), t.getUTCSeconds()].map((n) => String(n).padStart(2, "0")).join(":");
-}
-
-function luminance(hex: string): number {
-  const channels = [1, 3, 5].map((i) => {
-    const v = parseInt(hex.slice(i, i + 2), 16) / 255;
-    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
-  });
-  const [r = 0, g = 0, b = 0] = channels;
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-}
-
-/** WCAG 2.x contrast ratio between two #RRGGBB colours. */
-export function contrastRatio(a: string, b: string): number {
-  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x) as [number, number];
-  return (hi + 0.05) / (lo + 0.05);
-}
-
-/**
- * Samples x(t) of a unit-mass-normalised spring released from 1 toward 0 (semi-implicit Euler, 1ms steps).
- * Returns the curve and the time it takes to settle within 0.5% of rest.
- */
-export function simulateSpring(stiffness: number, damping: number, mass = 1, durationMs = 1200) {
-  let x = 1;
-  let v = 0;
-  let settledMs = durationMs;
-  const points: number[] = [];
-  for (let t = 0; t <= durationMs; t++) {
-    const a = (-stiffness * x - damping * v) / mass;
-    v += a / 1000;
-    x += v / 1000;
-    if (t % 10 === 0) points.push(x);
-    if (Math.abs(x) > 0.005 || Math.abs(v) > 0.05) settledMs = durationMs;
-    else if (settledMs === durationMs) settledMs = t;
-  }
-  return { points, settledMs };
-}
-
-// A figure with its unit (32ms, +64%, 100/100, 1.1s, 3.4x, ≥ 7.0:1); the lookarounds skip ids like VEL-001.
-const METRIC = /((?<![\w-])[<≥+]?\s?\d[\d.,:/]*(?:ms|%|s|x|kg|fps|\+)?(?![\w-]))/g;
-
-/** Splits text so that odd indices are metrics, ready to be highlighted. */
-export function splitMetrics(text: string): string[] {
-  return text.split(METRIC);
-}
-
 // ---------- Project blueprint calculator (CTA console) ----------
 
 export type ProjectType = CTAInquiryPayload["selectedProjectType"];
