@@ -33,6 +33,10 @@ npm run build
 
 Tanpa keduanya, brief proyek dikirim lewat WhatsApp dan email langsung.
 
+## Foto founder
+
+Simpan potret (rasio 4:5) di `public/founder.webp`, lalu di `src/data/studio.ts` ubah `photo: null` menjadi `photo: "/founder.webp"`. Selama kosong, logo V tampil sebagai pengganti.
+
 ## Keamanan
 
 Kontrol yang terpasang (diuji di `src/app/api/inquiry/route.test.ts` dan pemeriksaan header pada build produksi):

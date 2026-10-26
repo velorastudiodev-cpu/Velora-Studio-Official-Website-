@@ -12,15 +12,17 @@ type Look = {
   shot: string;
   /** Index of the metric shown as the panel's one fact. */
   fact: number;
+  /** Portrait crop for phones, when the wide shot would leave its subject tiny. */
+  phone?: string;
 };
 
 const LOOK: Record<ProjectId, Look> = {
   "VEL-001": { ground: "bg-ink", shot: SHOTS.dinastiPortfolio, fact: 1 },
-  "VEL-002": { ground: "bg-ink", shot: SHOTS.dashboardPanel, fact: 0 },
+  "VEL-002": { ground: "bg-ink", shot: SHOTS.dashboardPanel, fact: 3, phone: SHOTS.dashboardCard },
   "VEL-003": { ground: "bg-ink", shot: SHOTS.dzikriGallery, fact: 0 },
 };
 
-function Panel({ project }: { project: ProjectItem }) {
+function Panel({ project, index }: { project: ProjectItem; index: number }) {
   const { t, l } = useLanguage();
   const look = LOOK[project.id];
   const name = l(project.title).split(" — ")[0] ?? "";
@@ -36,18 +38,29 @@ function Panel({ project }: { project: ProjectItem }) {
     >
       <figure className="relative m-0 aspect-[4/5] overflow-clip sm:aspect-video lg:absolute lg:inset-0 lg:aspect-auto">
         {/* Slightly oversized so the scroll drift never shows an edge. */}
-        <div className="drift absolute inset-0 scale-[1.08]">
+        <div className={cn("drift absolute inset-0", look.phone && "hidden lg:block")}>
           <Shot src={look.shot} alt={t(`work.caption.${project.id}`)} sizes="100vw" />
         </div>
+        {look.phone && (
+          <div className="drift absolute inset-0 lg:hidden">
+            <Shot src={look.phone} alt={t(`work.caption.${project.id}`)} sizes="100vw" />
+          </div>
+        )}
       </figure>
 
       {/* The midline row: same place on every panel, so scrolling reads like turning plates. */}
       <div className="relative bg-ink py-8 text-paper lg:absolute lg:inset-x-0 lg:top-1/2 lg:-translate-y-1/2 lg:py-10">
         <div className="margin-x grid items-baseline gap-x-[var(--gutter)] gap-y-3 lg:grid-cols-12">
-          <h2 id={`${project.id}-name`} data-reveal className="display text-head lg:col-span-7 lg:col-start-3">
-            {name}
-          </h2>
-          <p data-reveal style={{ "--i": 1 } as React.CSSProperties} className="text-small text-ink-muted lg:col-span-2 lg:col-start-1 lg:row-start-1">{l(project.clientOrDomain)}</p>
+          <h3 id={`${project.id}-name`} className="display text-head lg:col-span-7 lg:col-start-3">
+            <span className="rise-mask">
+              <span className="rise-in" data-reveal>
+                {name}
+              </span>
+            </span>
+          </h3>
+          <p data-reveal style={{ "--i": 1 } as React.CSSProperties} className="text-small text-ink-muted lg:col-span-2 lg:col-start-1 lg:row-start-1">
+            <span className="tabular text-paper">{String(index + 1).padStart(2, "0")}</span> / {String(projects.length).padStart(2, "0")} · {l(project.clientOrDomain)}
+          </p>
           {fact && (
             <p data-reveal style={{ "--i": 1 } as React.CSSProperties} className="tabular lg:col-span-3 lg:text-right">
               <span className="font-semibold">{fact.value}</span> {l(fact.label).toLowerCase()}
@@ -82,11 +95,25 @@ function Panel({ project }: { project: ProjectItem }) {
 }
 
 export function WorkPanels() {
+  const { t } = useLanguage();
   return (
-    <div id="work">
-      {projects.map((p) => (
-        <Panel key={p.id} project={p} />
+    <section id="work" aria-labelledby="work-heading">
+      <header className="margin-x grid items-end gap-x-[var(--gutter)] gap-y-6 bg-ink pb-[clamp(3rem,6vw,5rem)] pt-[clamp(5rem,10vw,9rem)] text-paper lg:grid-cols-12">
+        <h2 id="work-heading" className="display text-display lg:col-span-7">
+          <span className="rise-mask">
+            <span className="rise-in" data-reveal>
+              {t("work.heading")}
+            </span>
+          </span>
+          <sup className="tabular ml-2 align-top text-[0.3em] text-lime">{String(projects.length).padStart(2, "0")}</sup>
+        </h2>
+        <p data-reveal style={{ "--i": 1 } as React.CSSProperties} className="text-lead max-w-[36ch] lg:col-span-4 lg:col-start-9">
+          {t("work.intro")}
+        </p>
+      </header>
+      {projects.map((p, i) => (
+        <Panel key={p.id} project={p} index={i} />
       ))}
-    </div>
+    </section>
   );
 }

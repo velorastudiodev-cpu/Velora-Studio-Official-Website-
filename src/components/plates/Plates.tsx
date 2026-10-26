@@ -12,6 +12,7 @@ export const SHOTS = {
   dinastiPortfolio: "/work/dinasti-portfolio.webp",
   dashboardLogin: "/work/dashboard-login.webp",
   dashboardPanel: "/work/dashboard-panel.webp", // login card moved to the top third, clear of the midline band
+  dashboardCard: "/work/dashboard-card.webp", // 4:5 crop of the login card, for phones
   dzikriHero: "/work/dzikri-hero.webp",
   dzikriGallery: "/work/dzikri-gallery.webp",
   dzikriCalculator: "/work/dzikri-calculator.webp",

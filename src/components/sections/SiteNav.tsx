@@ -9,6 +9,7 @@ import type { DictionaryKey } from "@/data/dictionaries";
 import { SPRING } from "@/lib/utils";
 
 export const NAV_LINKS: [string, DictionaryKey][] = [
+  ["#studio", "nav.studio"],
   ["#work", "nav.work"],
   ["#how", "nav.how"],
   ["#plan", "nav.plan"],

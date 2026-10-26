@@ -29,7 +29,7 @@ const ARCHETYPES: Record<
     lighthouse: "100 web · ≥95 dashboard",
     reference: ["VEL-001", "VEL-002"],
     deliverables: [
-      { id: "Website klien dengan booking real-time", en: "Client website with real-time booking" },
+      { id: "Website klien yang terhubung ke dashboard", en: "Client website wired to its dashboard" },
       { id: "Dashboard CMS & operasional kustom", en: "Custom CMS & operations dashboard" },
       { id: "Basis data & event bus bersama untuk keduanya", en: "One shared database & event bus for both" },
     ],

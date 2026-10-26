@@ -2,6 +2,7 @@ import type { Locale, LocalizedText } from "@/lib/schemas";
 
 const seed = {
   // Navigation
+  "nav.studio": { id: "Studio", en: "Studio" },
   "nav.work": { id: "Karya", en: "Work" },
   "nav.how": { id: "Cara kerja", en: "How I work" },
   "nav.plan": { id: "Rancang", en: "Plan" },
@@ -25,7 +26,48 @@ const seed = {
   "hero.reel.trail": { id: "Halaman utama Dzikri Mountain Guide yang sudah live", en: "The Dzikri Mountain Guide home page, live" },
   "how.shot.calculator": { id: "Kalkulator biaya trip di situs Dzikri Mountain Guide", en: "Trip cost calculator on the Dzikri Mountain Guide site" },
 
+  // Studio: what Velora is
+  "studio.heading": { id: "Apa itu Velora", en: "What Velora is" },
+  "studio.statement": {
+    id: "Velora Studio Dev adalah studio desain dan software dari Jakarta. Satu orang memegang seluruh prosesnya: memahami bisnis Anda, merancang tampilannya, menulis kodenya, lalu menjaganya tetap menyala. Tidak ada serah-terima antar tim, jadi tidak ada yang hilang di tengah jalan.",
+    en: "Velora Studio Dev is a design and software studio from Jakarta. One person holds the whole process: understanding your business, designing how it looks, writing the code, then keeping it running. No hand-offs between teams, so nothing gets lost on the way.",
+  },
+  "studio.p1.title": { id: "Satu kepala, satu tanggung jawab", en: "One head, one owner" },
+  "studio.p1.body": {
+    id: "Yang Anda ajak bicara di WhatsApp adalah yang menggambar layar dan menulis kodenya. Keputusan tidak tersesat di rantai tim.",
+    en: "The person you talk to on WhatsApp draws the screens and writes the code. Decisions don’t get lost in a chain of teams.",
+  },
+  "studio.p2.title": { id: "Dibuat untuk dipakai", en: "Made to be used" },
+  "studio.p2.body": {
+    id: "Barbershop, pemandu gunung, pemilik usaha. Setiap karya Velora dipakai bisnis sungguhan setiap hari, bukan sekadar konsep.",
+    en: "A barbershop, a mountain guide, a business owner. Every Velora build is used by a real business every day, not a concept.",
+  },
+  "studio.p3.title": { id: "Diukur, bukan dikira", en: "Measured, not guessed" },
+  "studio.p3.body": {
+    id: "Kecepatan, aksesibilitas, dan SEO dicek dengan Lighthouse sebelum rilis. Situs ini sendiri: 100 di keempatnya.",
+    en: "Speed, accessibility and SEO are checked with Lighthouse before release. This site itself scores 100 on all four.",
+  },
+  "studio.stat.live": { id: "sistem live dipakai klien", en: "live systems in client use" },
+  "studio.stat.skills": { id: "disiplin dalam satu orang", en: "disciplines in one person" },
+  "studio.stat.years": { id: "tahun menulis kode", en: "years writing code" },
+  "studio.stat.lighthouse": { id: "skor Lighthouse situs ini", en: "Lighthouse score of this site" },
+
+  // Founder
+  "founder.heading": { id: "Di balik Velora", en: "Behind Velora" },
+  "founder.role": { id: "Founder · desainer UI/UX & engineer · Jakarta", en: "Founder · UI/UX designer & engineer · Jakarta" },
+  "founder.bio": {
+    id: "Afataa mulai menulis kode dua tahun lalu dan sejak awal mengerjakan semuanya sendiri: desain di Figma, antarmuka di Next.js, sampai database dan server. Velora adalah nama untuk cara kerja itu, satu orang yang bisa diajak bicara dari ide pertama sampai rilis.",
+    en: "Afataa started writing code two years ago and has done every part alone since: design in Figma, interfaces in Next.js, down to the database and server. Velora is the name for that way of working: one person you can talk to from the first idea to the release.",
+  },
+  "founder.portfolio": { id: "Portofolio pribadi", en: "Personal portfolio" },
+  "founder.photo": { id: "Logo Velora sebagai potret sementara", en: "The Velora mark standing in for a portrait" },
+  "founder.credit": { id: "Dirancang dan dibangun oleh", en: "Designed and built by" },
+
   // Work panels
+  "work.intro": {
+    id: "Tiga sistem yang sedang dipakai klien hari ini. Bukan mockup: semuanya live dan bisa Anda buka.",
+    en: "Three systems clients use today. No mockups: all of them are live and you can open them.",
+  },
   "work.heading": { id: "Karya", en: "Work" },
   "work.visit": { id: "Buka situs", en: "Visit site" },
   "work.caption.VEL-001": {
@@ -48,6 +90,10 @@ const seed = {
   "how.verb.WEB_DEVELOPMENT": { id: "Bangun", en: "Build" },
   "how.verb.SOFTWARE_DEVELOPMENT": { id: "Jalankan", en: "Run" },
   "how.tools": { id: "Alat", en: "Tools" },
+  "how.intro": {
+    id: "Empat tahap, satu orang. Setiap tahap dikerjakan oleh tangan yang sama, jadi desain dan kode tidak pernah saling menebak.",
+    en: "Four stages, one person. The same hands do every stage, so design and code never have to guess at each other.",
+  },
 
   // Plan your project (the configurator)
   "plan.heading": { id: "Rancang proyek Anda", en: "Plan your project" },
@@ -117,7 +163,6 @@ const seed = {
     id: "Untuk developer: tekan ~ untuk terminal, Ctrl+K untuk menu, dan Alt+I untuk membedah halaman ini.",
     en: "For developers: press ~ for the terminal, Ctrl+K for the menu and Alt+I to inspect this page.",
   },
-  "footer.place": { id: "Indonesia, zona WIB", en: "Indonesia, WIB time zone" },
   "footer.top": { id: "Kembali ke atas", en: "Back to top" },
 
   // Redline inspector

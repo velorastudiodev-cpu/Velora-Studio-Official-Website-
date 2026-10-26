@@ -61,6 +61,18 @@ deviation and why in the phase report.
 - VEL-002 copy now lists the real dashboard features (barber cash, margins, charts; edits photos, videos,
   location, hours, dates, WhatsApp, Instagram on DINASTI). The client renamed Ikbar Barbershop → DINASTI.
 
+## Phase 7: studio identity + motion (owner: "too simple, only a museum of work")
+- New sections: StudioIntro (what Velora is, statement lit phrase by phrase, count-up stats, 3 principles),
+  Ticker (disciplines marquee), Founder (Ahmad Afataa Kusdianto "Afataa", Jakarta, coding ~2 years,
+  portfolio afataa-ecosystem.vercel.app). Facts in src/data/studio.ts; photo slot falls back to the mark until
+  FOUNDER.photo is set (owner will upload a portrait).
+- Order: hero → studio → ticker → founder → work → how → plan → footer. Work and How got real headers;
+  How stacks its stages (lg sticky). Footer shows the whole logo (owner found the crop cut off).
+- Motion is CSS: hero words rise on load, headings rise on reveal, images open by clip-path, count-up via
+  @property --n, scroll timelines for lit text / drift zoom / mark turn / footer wipe. All off under reduced motion.
+- VEL-002 on phones uses public/work/dashboard-card.webp (4:5 crop of the login card).
+- Lighthouse mobile perf 92–94 in this container (same as the previous build under the same load).
+
 ## Owner's live projects (wire in at the project-matrix stage)
 - VEL-001 client web: https://ikbar-barbershop.vercel.app
 - VEL-002 CMS dashboard: https://ikbar-barbershop-5rx3.vercel.app/dashboard
