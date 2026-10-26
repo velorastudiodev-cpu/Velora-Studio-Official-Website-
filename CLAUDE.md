@@ -54,6 +54,13 @@ deviation and why in the phase report.
   htmlLimitedBots: /.*/ keeps metadata in <head>.
 - Lighthouse (prod build, local): desktop 100/100/100/100, mobile 96/100/100/100.
 
+## Security (pre-deploy hardening)
+- Nonce CSP in src/middleware.ts (+ GET/HEAD only on pages), other headers in next.config.ts, poweredByHeader off.
+- /api/inquiry: same-origin check, JSON only, 10 kB cap, in-memory rate limit (shortcut), field-only errors;
+  tests in src/app/api/inquiry/route.test.ts. postcss pinned via package.json overrides (npm audit 0).
+- VEL-002 copy now lists the real dashboard features (barber cash, margins, charts; edits photos, videos,
+  location, hours, dates, WhatsApp, Instagram on DINASTI). The client renamed Ikbar Barbershop → DINASTI.
+
 ## Owner's live projects (wire in at the project-matrix stage)
 - VEL-001 client web: https://ikbar-barbershop.vercel.app
 - VEL-002 CMS dashboard: https://ikbar-barbershop-5rx3.vercel.app/dashboard

@@ -54,13 +54,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await resolveLocale();
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
   const fonts = `${archivo.variable} ${geistMono.variable}`; // taste-skill-ignore: the mono variable serves the CLI only
 
   // suppressHydrationWarning: the inline script adds "js" before React hydrates.
   return (
     <html lang={locale} className={fonts} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
       <body>
         <a href="#hero-title" className="sr-only z-[100] bg-lime px-4 py-3 font-medium text-lime-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4">

@@ -3,6 +3,7 @@ import { PlanConfigurator } from "@/components/sections/PlanConfigurator";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { VerbPanels } from "@/components/sections/VerbPanels";
 import { WorkPanels } from "@/components/sections/WorkPanels";
+import { headers } from "next/headers";
 import { CONTACT } from "@/data/contact";
 import { SITE_URL } from "@/lib/site";
 
@@ -20,10 +21,12 @@ const jsonLd = {
 };
 
 // The argument, in order: what this is (hero) → proof (work) → how (verbs) → your project (plan + band) → close.
-export default function Home() {
+export default async function Home() {
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {/* "<" escaped so no string in the data can close the script element. */}
+      <script type="application/ld+json" nonce={nonce} dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <main>
         <HeroReel />
         <WorkPanels />
