@@ -1,26 +1,288 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Theme is class-driven (.dark on <html>), not media-driven. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root,
+.light {
+  /* Light Mode — Crisp White, Technical Grey & Violet-Rose Accents */
+  --bg-primary: #fafafc;
+  --bg-surface: #f2f0f7;
+  --bg-elevated: #ffffff;
+  --text-primary: #09090b;
+  --text-secondary: #52525b;
+  /* PRD #71717A measured 4.28:1 on --bg-surface; darkened to clear AA (>=5.2:1) on every surface. */
+  --text-muted: #63636c;
+  --border-hairline: #e4e2ec;
+  --border-strong: #18181b;
+
+  /* Velora Brand Core Tokens */
+  --velora-purple: #7c3aed;
+  --velora-lavender: #a78bfa;
+  --velora-pink: #db2777;
+  --velora-pink-soft: #f472b6;
+  --status-online: #10b981;
+  --inspector-redline: #ec4899;
+  /* Text-safe accent for telemetry labels: lavender is 2.6:1 on white, this is 7.9:1. */
+  --accent-text: #5b21b6;
+  /* Primary action fill in both themes: white text on #7C3AED is 5.7:1 (on #8B5CF6 it would be 4.2:1). */
+  --action: #7c3aed;
+
+  /* 4 Core Discipline Pillar Tokens */
+  --pillar-uiux: #ec4899;
+  --pillar-web-eng: #8b5cf6;
+  --pillar-web-dev: #a855f7;
+  --pillar-soft-dev: #f43f5e;
+
+  /* Typography — Geist is self-hosted via next/font and exposed as --font-geist-*. */
+  --font-sans: var(--font-geist-sans), "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: var(--font-geist-mono), "JetBrains Mono", monospace;
+
+  /* Layout */
+  --grid-max: 1280px;
+  --topbar-h: 48px;
+
+  color-scheme: light;
 }
 
+.dark {
+  /* Dark Mode (Default) — Obsidian Black, Charcoal Grey, White & Neon Violet-Rose */
+  --bg-primary: #09090b;
+  --bg-surface: #121216;
+  --bg-elevated: #1a1a22;
+  --text-primary: #fafafc;
+  --text-secondary: #a1a1aa;
+  /* PRD #71717A measured 3.58:1 on --bg-elevated; lifted to clear AA (>=5.0:1) on every surface. */
+  --text-muted: #8a8a94;
+  --border-hairline: #262530;
+  --border-strong: #c4b5fd;
+
+  --velora-purple: #8b5cf6;
+  --velora-lavender: #c4b5fd;
+  --velora-pink: #ec4899;
+  --velora-pink-soft: #f9a8d4;
+  --status-online: #10b981;
+  --inspector-redline: #f472b6;
+  --accent-text: #c4b5fd;
+
+  --pillar-uiux: #f472b6;
+  --pillar-web-eng: #c4b5fd;
+  --pillar-web-dev: #a78bfa;
+  --pillar-soft-dev: #fb7185;
+
+  color-scheme: dark;
+}
+
+/* Expose tokens as Tailwind utilities: bg-primary, text-secondary, border-hairline, text-velora-pink, ... */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--bg-primary);
+  --color-surface: var(--bg-surface);
+  --color-elevated: var(--bg-elevated);
+  --color-ink: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+  --color-hairline: var(--border-hairline);
+  --color-strong: var(--border-strong);
+  --color-velora-purple: var(--velora-purple);
+  --color-velora-lavender: var(--velora-lavender);
+  --color-velora-pink: var(--velora-pink);
+  --color-velora-pink-soft: var(--velora-pink-soft);
+  --color-online: var(--status-online);
+  --color-redline: var(--inspector-redline);
+  --color-accent-text: var(--accent-text);
+  --color-action: var(--action);
+  --color-pillar-uiux: var(--pillar-uiux);
+  --color-pillar-web-eng: var(--pillar-web-eng);
+  --color-pillar-web-dev: var(--pillar-web-dev);
+  --color-pillar-soft-dev: var(--pillar-soft-dev);
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ---------- Base ---------- */
+
+html {
+  background: var(--bg-primary);
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--topbar-h) + 16px);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--velora-purple);
+  color: #fafafc;
+}
+
+/* In the base layer so a utility (e.g. the CLI input's outline-none) can opt out deliberately. */
+@layer base {
+  :focus-visible {
+    outline: 1.5px solid var(--velora-pink);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+  }
+}
+
+/* ---------- Typography scale (PRD §2.2) ---------- */
+
+@utility text-h1 {
+  font-size: clamp(2.25rem, 4.4vw, 3.65rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+}
+
+@utility text-h2 {
+  font-size: clamp(1.4rem, 2.4vw, 1.95rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+/* [01 // MULTIDISCIPLINARY_PILLARS] */
+@utility text-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-text);
+}
+
+@utility text-body {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  max-width: 65ch;
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 1px hairline grid ---------- */
+
+@utility hairline {
+  border: 1px solid var(--border-hairline);
+}
+
+/* Shared walls: each cell draws only right + bottom; the container draws top + left. */
+@utility hairline-grid {
+  display: grid;
+  border-top: 1px solid var(--border-hairline);
+  border-left: 1px solid var(--border-hairline);
+  & > * {
+    border-right: 1px solid var(--border-hairline);
+    border-bottom: 1px solid var(--border-hairline);
+  }
+}
+
+/* Active state: 1px accent border, no glow. */
+@utility hairline-active {
+  border-color: var(--velora-purple);
+  box-shadow: inset 0 0 0 1px var(--velora-purple);
+}
+
+/* Faint blueprint ruling for a section background (lines only, no fills or glows). */
+@utility blueprint-ruling {
+  background-image:
+    linear-gradient(to right, var(--border-hairline) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-hairline) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Telemetry pulse for the online dot. */
+@keyframes velora-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@utility pulse-dot {
+  animation: velora-pulse 1.8s ease-in-out infinite;
+}
+
+/* Crosshairs sit on the frame edge and poke past it; clip instead of hidden so sticky still works. */
+body {
+  overflow-x: clip;
+}
+
+/* "+" registration mark, centred on its own top-left: place it with left/top on a corner. */
+@utility crosshair-mark {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  width: 11px;
+  height: 11px;
+  translate: -50% -50%;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--text-muted), var(--text-muted)) center / 1px 100% no-repeat,
+    linear-gradient(var(--text-muted), var(--text-muted)) center / 100% 1px no-repeat;
+  /* Only once there is margin outside the 1280px frame; on narrower screens the marks would hang off-screen. */
+  @media (min-width: 1300px) {
+    display: block;
+  }
+}
+
+/* ---------- Redline inspector (Alt+I) ---------- */
+
+.inspector-on [data-inspector] {
+  outline: 1px dashed var(--inspector-redline);
+  outline-offset: -1px;
+}
+
+.inspector-on [data-inspector]::after {
+  content: attr(data-inspector) "  " attr(data-size);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  padding: 1px 5px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: #09090b;
+  background: var(--inspector-redline);
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Data flowing along an active architecture edge. */
+@keyframes edge-flow {
+  to {
+    stroke-dashoffset: -8;
+  }
+}
+
+.edge-flow {
+  stroke-dasharray: 4 4;
+  animation: edge-flow 0.6s linear infinite;
+}
+
+/* Outer sections label their bottom-right corner so they never collide with a nested cell's top-left label. */
+.inspector-on section[data-inspector]::after {
+  top: auto;
+  left: auto;
+  bottom: 0;
+  right: 0;
 }

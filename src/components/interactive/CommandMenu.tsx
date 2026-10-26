@@ -1,0 +1,220 @@
+"use client";
+
+import { Command } from "cmdk";
+import {
+  ArrowUpRight,
+  Check,
+  Globe,
+  Hash,
+  Languages,
+  Mail,
+  MessageCircle,
+  Moon,
+  RefreshCw,
+  ScanLine,
+  SquareTerminal,
+  type LucideIcon,
+} from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { useInspector } from "@/context/InspectorContext";
+import { useLanguage } from "@/context/LanguageContext";
+import { usePillarFilter } from "@/context/PillarFilterContext";
+import { CONTACT, whatsappLink } from "@/data/contact";
+import type { DictionaryKey } from "@/data/dictionaries";
+import { pillars } from "@/data/pillars";
+import { projects } from "@/data/projects";
+import { emit, useVeloraEvent } from "@/lib/events";
+import { LocaleEnum } from "@/lib/schemas";
+import { SPRING } from "@/lib/utils";
+
+const NAV: [string, DictionaryKey][] = [
+  ["#top", "nav.hero"],
+  ["#pillars", "nav.pillars"],
+  ["#lab", "nav.lab"],
+  ["#projects", "nav.projects"],
+  ["#ledger", "nav.ledger"],
+  ["#cta", "nav.cta"],
+];
+
+const item =
+  "flex h-10 cursor-pointer items-center gap-3 px-3 text-sm text-secondary data-[selected=true]:bg-elevated data-[selected=true]:text-ink data-[selected=true]:shadow-[inset_2px_0_0_var(--velora-pink)]";
+const group =
+  "[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pb-1 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:font-mono [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-[0.08em] [&_[cmdk-group-heading]]:text-accent-text";
+
+function Item({ icon: Icon, onSelect, children }: { icon: LucideIcon; onSelect: () => void; children: React.ReactNode }) {
+  return (
+    <Command.Item onSelect={onSelect} className={item}>
+      <Icon size={15} strokeWidth={1.5} aria-hidden className="shrink-0" />
+      {children}
+    </Command.Item>
+  );
+}
+
+export function CommandMenu() {
+  const { t, l, setLocale } = useLanguage();
+  const inspector = useInspector();
+  const { setActive } = usePillarFilter();
+  const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const returnFocus = useRef<HTMLElement | null>(null);
+
+  useVeloraEvent("velora:command", () => setOpen((o) => !o));
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setOpen((o) => !o);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  useEffect(() => {
+    if (open) returnFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    else returnFocus.current?.focus();
+  }, [open]);
+
+  const run = (fn: () => void) => () => {
+    setOpen(false);
+    fn();
+  };
+  const jump = (hash: string) => document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(CONTACT.email);
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+        setOpen(false);
+      }, 900);
+    } catch {
+      // Clipboard blocked (insecure context, permissions): fall back to the mail client.
+      window.location.href = `mailto:${CONTACT.email}`;
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          key="cmdk"
+          className="fixed inset-0 z-[80] flex items-start justify-center bg-[color-mix(in_srgb,var(--bg-primary)_70%,transparent)] px-4 pt-[12vh]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={SPRING.drawer}
+          onMouseDown={(e) => e.target === e.currentTarget && setOpen(false)}
+        >
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={t("cmdk.title")}
+            className="w-full max-w-[560px] border border-velora-purple bg-surface shadow-[0_24px_64px_rgb(0_0_0/0.45)]"
+            initial={{ y: -16, scale: 0.98 }}
+            animate={{ y: 0, scale: 1 }}
+            exit={{ y: -16, scale: 0.98 }}
+            transition={SPRING.drawer}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") setOpen(false);
+              if (e.key === "Tab") e.preventDefault(); // focus stays in the search field
+            }}
+          >
+            <Command label={t("cmdk.title")} loop>
+              <Command.Input
+                autoFocus
+                placeholder={t("cmdk.placeholder")}
+                className="h-12 w-full border-b border-hairline bg-transparent px-4 text-sm text-ink outline-none placeholder:text-muted"
+              />
+              <Command.List className="max-h-[min(60vh,420px)] overflow-y-auto pb-2">
+                <Command.Empty className="px-4 py-6 text-sm text-secondary">{t("cmdk.empty")}</Command.Empty>
+
+                <Command.Group heading={t("cmdk.group.navigate")} className={group}>
+                  {NAV.map(([hash, key]) => (
+                    <Item key={hash} icon={Hash} onSelect={run(() => jump(hash))}>
+                      {t(key)}
+                    </Item>
+                  ))}
+                  {projects.map((p) => (
+                    <Item key={p.id} icon={Hash} onSelect={run(() => jump(`#${p.slug}`))}>
+                      <span className="tabular font-mono text-xs text-accent-text">{p.id}</span>
+                      {l(p.title).split(" — ")[0]}
+                    </Item>
+                  ))}
+                </Command.Group>
+
+                <Command.Group heading={t("cmdk.group.actions")} className={group}>
+                  <Item icon={ScanLine} onSelect={run(inspector.toggle)}>
+                    {t("cmdk.action.inspector")}
+                  </Item>
+                  <Item icon={Moon} onSelect={run(() => emit("velora:theme"))}>
+                    {t("cmdk.action.theme")}
+                  </Item>
+                  <Item icon={SquareTerminal} onSelect={run(() => emit("velora:terminal"))}>
+                    {t("cmdk.action.terminal")}
+                  </Item>
+                  <Item
+                    icon={RefreshCw}
+                    onSelect={run(() => {
+                      jump("#projects");
+                      emit("velora:sync-demo");
+                    })}
+                  >
+                    {t("cmdk.action.sync")}
+                  </Item>
+                  <Item icon={MessageCircle} onSelect={run(() => window.open(whatsappLink(t("cta.msg.greeting")), "_blank", "noopener"))}>
+                    {t("cmdk.action.whatsapp")} · {CONTACT.whatsappDisplay}
+                  </Item>
+                  <Item icon={copied ? Check : Mail} onSelect={copyEmail}>
+                    {copied ? t("cmdk.copied") : `${t("cmdk.action.email")} · ${CONTACT.email}`}
+                  </Item>
+                  {projects.map(
+                    (p) =>
+                      p.links.liveDemo && (
+                        <Item key={p.id} icon={ArrowUpRight} onSelect={run(() => window.open(p.links.liveDemo, "_blank", "noopener"))}>
+                          {t("cmdk.action.live")} · {l(p.title).split(" — ")[0]}
+                        </Item>
+                      ),
+                  )}
+                </Command.Group>
+
+                <Command.Group heading={t("cmdk.group.language")} className={group}>
+                  {LocaleEnum.options.map((loc) => (
+                    <Item key={loc} icon={loc === "id" ? Languages : Globe} onSelect={run(() => setLocale(loc))}>
+                      {loc === "id" ? "Bahasa Indonesia" : "English"}
+                    </Item>
+                  ))}
+                </Command.Group>
+
+                <Command.Group heading={t("cmdk.group.pillars")} className={group}>
+                  {[null, ...pillars].map((p) => (
+                    <Item
+                      key={p?.id ?? "all"}
+                      icon={Hash}
+                      onSelect={run(() => {
+                        setActive(p?.id ?? null);
+                        jump("#projects");
+                      })}
+                    >
+                      {p ? (
+                        <>
+                          <span aria-hidden className="size-1.5" style={{ background: `var(${p.accentVar})` }} />
+                          {p.indexCode} {l(p.title)}
+                        </>
+                      ) : (
+                        t("pillars.filter.all")
+                      )}
+                    </Item>
+                  ))}
+                </Command.Group>
+              </Command.List>
+            </Command>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
