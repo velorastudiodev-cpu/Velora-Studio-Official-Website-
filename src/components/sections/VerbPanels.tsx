@@ -1,54 +1,31 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { BookingPlate, ChairPlate, TrailPlate } from "@/components/plates/Plates";
+import { Redlines, SHOTS, Shot, SketchPlate } from "@/components/plates/Plates";
 import { useLanguage } from "@/context/LanguageContext";
+import type { DictionaryKey } from "@/data/dictionaries";
 import { pillars } from "@/data/pillars";
 import type { DisciplinePillar } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 
-/** Redline measurements over the finished booking screen: what engineering checks. */
-function Redlines() {
-  const mark = { stroke: "var(--redline)", strokeWidth: 3 };
-  const tag = (x: number, y: number, text: string) => (
-    <g>
-      <rect x={x} y={y - 30} width={text.length * 15 + 24} height={42} fill="var(--redline)" />
-      <text x={x + 12} y={y} fontSize={26} fontWeight={700} fill="#fff">
-        {text}
-      </text>
-    </g>
-  );
-  return (
-    <svg viewBox="0 0 1600 900" aria-hidden className="absolute inset-0 h-full w-full" style={{ fontFamily: "var(--font-text)" }}>
-      {/* QRIS button width */}
-      <line x1={1020} y1={850} x2={1520} y2={850} {...mark} />
-      <line x1={1020} y1={836} x2={1020} y2={864} {...mark} />
-      <line x1={1520} y1={836} x2={1520} y2={864} {...mark} />
-      {tag(1200, 890, "500 × 120")}
-      {/* Slot rhythm */}
-      <rect x={1020} y={220} width={116} height={76} fill="none" {...mark} strokeDasharray="8 6" />
-      {tag(1020, 205, "116 × 76")}
-      {/* Interaction budget */}
-      {tag(80, 660, "INP 18 ms")}
-      {tag(300, 660, "CLS 0.000")}
-    </svg>
-  );
-}
+type T = (key: DictionaryKey) => string;
+const SIZES = "(min-width: 1024px) 58vw, 100vw";
 
-const STAGES: Record<DisciplinePillar, { ground: string; ink: string; muted: string; plate: (label: string) => ReactNode }> = {
+// One real page per stage: traced, measured, built, then running behind its own login.
+const STAGES: Record<DisciplinePillar, { ground: string; ink: string; muted: string; plate: (t: T) => ReactNode }> = {
   UI_UX_DESIGN: {
     ground: "bg-paper-2",
     ink: "text-ink",
     muted: "text-muted",
-    plate: (label) => <BookingPlate mode="sketch" label={label} />,
+    plate: (t) => <SketchPlate label={t("hero.reel.sketch")} />,
   },
   WEBSITE_ENGINEERING: {
     ground: "bg-ink",
     ink: "text-paper",
     muted: "text-ink-muted",
-    plate: (label) => (
+    plate: (t) => (
       <>
-        <BookingPlate mode="solid" label={label} />
+        <Shot src={SHOTS.dinastiHero} alt={t("hero.reel.solid")} sizes={SIZES} />
         <Redlines />
       </>
     ),
@@ -57,13 +34,13 @@ const STAGES: Record<DisciplinePillar, { ground: string; ink: string; muted: str
     ground: "bg-violet",
     ink: "text-violet-ink",
     muted: "text-violet-ink",
-    plate: (label) => <ChairPlate label={label} />,
+    plate: (t) => <Shot src={SHOTS.dzikriCalculator} alt={t("how.shot.calculator")} sizes={SIZES} />,
   },
   SOFTWARE_DEVELOPMENT: {
     ground: "bg-paper",
     ink: "text-ink",
     muted: "text-muted",
-    plate: (label) => <TrailPlate label={label} drawIn />,
+    plate: (t) => <Shot src={SHOTS.dashboardLogin} alt={t("hero.reel.dashboard")} sizes={SIZES} />,
   },
 };
 
@@ -99,7 +76,7 @@ export function VerbPanels() {
                 </p>
               </div>
               <figure data-reveal style={{ "--i": 2 } as React.CSSProperties} className="m-0 lg:col-span-7">
-                <div className="relative aspect-video overflow-clip rounded-[4px]">{s.plate(l(p.title))}</div>
+                <div className="relative aspect-video overflow-clip rounded-[4px]">{s.plate(t)}</div>
               </figure>
             </div>
           </article>

@@ -2,13 +2,13 @@
 
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
-import { BookingPlate, ChairPlate, TrailPlate } from "@/components/plates/Plates";
+import { SHOTS, Shot, SketchPlate } from "@/components/plates/Plates";
 import { SiteNav } from "@/components/sections/SiteNav";
 import { useLanguage } from "@/context/LanguageContext";
 import { whatsappLink } from "@/data/contact";
 import type { DictionaryKey } from "@/data/dictionaries";
 
-const CAPTIONS: DictionaryKey[] = ["hero.reel.sketch", "hero.reel.solid", "hero.reel.chairs", "hero.reel.trail"];
+const CAPTIONS: DictionaryKey[] = ["hero.reel.sketch", "hero.reel.solid", "hero.reel.dashboard", "hero.reel.trail"];
 
 /** Words of a half on their own lines from lg up, inline (one line per half) on phones. */
 function Half({ text, align }: { text: string; align: "left" | "right" }) {
@@ -40,10 +40,10 @@ export function HeroReel() {
   useMotionValueEvent(scrollYProgress, "change", (p) => setStep(Math.min(steps, Math.round(p * steps))));
 
   const frames = [
-    <BookingPlate key="sketch" mode="sketch" label={t("hero.reel.sketch")} />,
-    <BookingPlate key="solid" mode="solid" label={t("hero.reel.solid")} />,
-    <ChairPlate key="chairs" label={t("hero.reel.chairs")} />,
-    <TrailPlate key="trail" label={t("hero.reel.trail")} />,
+    <SketchPlate key="sketch" label={t("hero.reel.sketch")} />,
+    <Shot key="solid" src={SHOTS.dinastiHero} alt={t("hero.reel.solid")} sizes="40vw" priority />,
+    <Shot key="dashboard" src={SHOTS.dashboardLogin} alt={t("hero.reel.dashboard")} sizes="40vw" />,
+    <Shot key="trail" src={SHOTS.dzikriHero} alt={t("hero.reel.trail")} sizes="40vw" />,
   ];
 
   return (
@@ -55,7 +55,7 @@ export function HeroReel() {
         <div className="pointer-events-none absolute inset-y-0 left-1/2 hidden w-[40vw] -translate-x-1/2 [--fgap:calc((100svh-var(--fh))/2-56px)] [--fh:calc(40vw*9/16)] lg:block">
           <motion.div style={reduce ? {} : { y }} className="flex flex-col gap-[var(--fgap)] pt-[calc((100svh-var(--fh))/2)]">
             {frames.map((f, i) => (
-              <div key={i} className="aspect-video w-full overflow-hidden rounded-[4px] bg-paper-2">
+              <div key={i} className="relative aspect-video w-full overflow-hidden rounded-[4px] bg-paper-2">
                 {f}
               </div>
             ))}
@@ -68,12 +68,12 @@ export function HeroReel() {
         >
           <Half text={t("hero.left")} align="left" />
           {/* Phone: the frame sits between the halves, crossfading from sketch to solid. */}
-          <span aria-hidden className="relative my-5 block aspect-[4/3] w-full overflow-hidden rounded-[4px] bg-paper-2 sm:aspect-video lg:hidden">
+          <span aria-hidden className="relative my-5 block aspect-video w-full overflow-hidden rounded-[4px] bg-paper-2 lg:hidden">
             <span className="absolute inset-0 animate-[sketch-fade_7s_ease-in-out_infinite_alternate]">
-              <BookingPlate mode="sketch" label={t("hero.reel.sketch")} fit="cover" />
+              <SketchPlate label={t("hero.reel.sketch")} />
             </span>
             <span className="absolute inset-0 animate-[solid-fade_7s_ease-in-out_infinite_alternate]">
-              <BookingPlate mode="solid" label={t("hero.reel.solid")} fit="cover" />
+              <Shot src={SHOTS.dinastiHero} alt="" sizes="100vw" />
             </span>
           </span>
           <Half text={t("hero.right")} align="right" />

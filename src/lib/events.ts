@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 // Cross-island actions (CLI, command menu, topbar) without a global store.
-export type VeloraEvent = "velora:sync-demo" | "velora:terminal" | "velora:command" | "velora:theme";
+export type VeloraEvent = "velora:terminal" | "velora:command";
 
 export function emit(name: VeloraEvent) {
   window.dispatchEvent(new Event(name));

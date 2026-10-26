@@ -9,7 +9,6 @@ import {
   Languages,
   Mail,
   MessageCircle,
-  RefreshCw,
   ScanLine,
   SquareTerminal,
   type LucideIcon,
@@ -141,15 +140,6 @@ export function CommandMenu() {
                   </Item>
                   <Item icon={copied ? Check : Mail} onSelect={copyEmail}>
                     {copied ? t("cmdk.copied") : `${t("cmdk.action.email")}, ${CONTACT.email}`}
-                  </Item>
-                  <Item
-                    icon={RefreshCw}
-                    onSelect={run(() => {
-                      jump("#ikbar-barbershop-dashboard");
-                      emit("velora:sync-demo");
-                    })}
-                  >
-                    {t("cmdk.action.sync")}
                   </Item>
                   <Item icon={ScanLine} onSelect={run(inspector.toggle)}>
                     {t("cmdk.action.inspector")}

@@ -16,76 +16,31 @@ export const DisciplinePillarEnum = z.enum([
 
 export const ProjectIdEnum = z.enum(["VEL-001", "VEL-002", "VEL-003"]);
 
-export const ArchitectureNodeSchema = z.object({
-  id: z.string(),
-  label: z.string(),
-  type: z.enum([
-    "client_web",
-    "cms_dashboard",
-    "design_system",
-    "edge_gateway",
-    "api_core",
-    "database",
-    "realtime_sync",
-    "offline_storage",
-  ]),
-  tech: z.string(),
-  latencyMs: z.number(),
-  connections: z.array(z.string()),
+export const ProjectSchema = z.object({
+  id: ProjectIdEnum,
+  title: LocalizedTextSchema,
+  slug: z.string(),
+  categoryBadge: LocalizedTextSchema,
+  tagline: LocalizedTextSchema,
+  clientOrDomain: LocalizedTextSchema,
+  soloFounderRole: z.string(),
+  pillars: z.array(DisciplinePillarEnum).min(2),
+  status: z.enum(["PRODUCTION", "LIVE_ECOSYSTEM"]),
+  stack: z.array(z.string()).min(4),
+  problemStatement: LocalizedTextSchema,
+  engineeringSolution: LocalizedTextSchema,
+  metrics: z
+    .array(
+      z.object({
+        label: LocalizedTextSchema,
+        value: z.string(),
+      }),
+    )
+    .length(4),
+  links: z.object({
+    liveDemo: z.url().optional(),
+  }),
 });
-
-export const DesignSystemSpecSchema = z.object({
-  wcagLevel: z.enum(["AA", "AAA"]),
-  contrastRatio: z.string(),
-  tokenCount: z.number().int().positive(),
-  interactionFrameBudgetMs: z.number(),
-  gridSystem: z.string(),
-  colorSignature: z.array(z.string()).min(3),
-  keyUXFlows: z.array(LocalizedTextSchema).min(3),
-});
-
-export const ProjectSchema = z
-  .object({
-    id: ProjectIdEnum,
-    // Links VEL-001 (client web) and VEL-002 (CMS) as one ecosystem.
-    linkedProjectId: ProjectIdEnum.optional(),
-    title: LocalizedTextSchema,
-    slug: z.string(),
-    categoryBadge: LocalizedTextSchema,
-    tagline: LocalizedTextSchema,
-    clientOrDomain: LocalizedTextSchema,
-    soloFounderRole: z.string(),
-    pillars: z.array(DisciplinePillarEnum).min(2),
-    timeline: z.string(),
-    status: z.enum(["PRODUCTION", "LIVE_ECOSYSTEM"]),
-    stack: z.array(z.string()).min(4),
-    problemStatement: LocalizedTextSchema,
-    engineeringSolution: LocalizedTextSchema,
-    metrics: z
-      .array(
-        z.object({
-          label: LocalizedTextSchema,
-          value: z.string(),
-          delta: z.string(),
-        }),
-      )
-      .length(4),
-    links: z.object({
-      liveDemo: z.url().optional(),
-      architectureDoc: z.string().optional(),
-      figmaRedline: z.string().optional(),
-    }),
-    architecture: z.array(ArchitectureNodeSchema).min(5),
-    designSpec: DesignSystemSpecSchema,
-  })
-  // A graph edge pointing at a missing node would render a dangling line.
-  .refine(
-    (p) => {
-      const ids = new Set(p.architecture.map((n) => n.id));
-      return p.architecture.every((n) => n.connections.every((c) => ids.has(c)));
-    },
-    { message: "architecture.connections must reference existing node ids" },
-  );
 
 export const CapabilityPillarSchema = z.object({
   id: DisciplinePillarEnum,
@@ -120,7 +75,6 @@ export type Locale = z.infer<typeof LocaleEnum>;
 export type LocalizedText = z.infer<typeof LocalizedTextSchema>;
 export type DisciplinePillar = z.infer<typeof DisciplinePillarEnum>;
 export type ProjectId = z.infer<typeof ProjectIdEnum>;
-export type ArchitectureNode = z.infer<typeof ArchitectureNodeSchema>;
 export type ProjectItem = z.infer<typeof ProjectSchema>;
 export type CapabilityPillar = z.infer<typeof CapabilityPillarSchema>;
 export type CTAInquiryPayload = z.infer<typeof CTAInquiryPayloadSchema>;

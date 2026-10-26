@@ -9,7 +9,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import type { DictionaryKey } from "@/data/dictionaries";
 import { pillars } from "@/data/pillars";
 import { projects } from "@/data/projects";
-import { emit, isTyping, useVeloraEvent } from "@/lib/events";
+import { isTyping, useVeloraEvent } from "@/lib/events";
 import { LocaleEnum } from "@/lib/schemas";
 import { SPRING } from "@/lib/utils";
 
@@ -28,7 +28,6 @@ const COMMANDS: [string, DictionaryKey][] = [
   ["pillars", "terminal.help.pillars"],
   ["ls projects", "terminal.help.ls"],
   ["inspect <VEL-001|VEL-002|VEL-003>", "terminal.help.inspect"],
-  ["sync-demo", "terminal.help.sync"],
   ["lang <id|en>", "terminal.help.lang"],
   ["inspector <on|off>", "terminal.help.inspector"],
   ["cta", "terminal.help.cta"],
@@ -162,25 +161,16 @@ export function TerminalDrawer() {
         if (!p) return print(err(`${t("terminal.unknownProject")} ${arg || "∅"}`), out(`${t("terminal.usage")} inspect VEL-001`));
         return print(
           <span className="text-paper">{l(p.title)}</span>,
-          out(`${p.status} · ${p.timeline} · ${p.stack.join(", ")}`),
+          out(`${p.status} · ${p.stack.join(", ")}`),
           ...p.metrics.map((m) => (
             <span key={m.label.en}>
               <span className="tabular text-[#b9b1f0]">{m.value.padEnd(14)}</span>
               <span className="text-ink-muted">{l(m.label)}</span>
-              <span className="text-ink-muted"> ({m.delta})</span>
             </span>
           )),
-          <span className="text-ink-muted">
-            {p.architecture.map((n) => `${n.label} [${n.latencyMs}ms]`).join(" → ")}
-          </span>,
           ...(p.links.liveDemo ? [out(p.links.liveDemo)] : []),
         );
       }
-      case "sync-demo":
-        print(out(t("terminal.syncing")));
-        jump("#ikbar-barbershop-dashboard");
-        emit("velora:sync-demo");
-        return;
       case "lang": {
         const parsed = LocaleEnum.safeParse(arg.toLowerCase());
         if (!parsed.success) return print(err(`${t("terminal.usage")} lang <id|en>`));
