@@ -22,7 +22,7 @@ import { CONTACT, whatsappLink } from "@/data/contact";
 import type { DictionaryKey } from "@/data/dictionaries";
 import { projects } from "@/data/projects";
 import { emit, useVeloraEvent } from "@/lib/events";
-import { LocaleEnum } from "@/lib/schemas";
+import { LOCALES } from "@/lib/enums";
 import { SPRING } from "@/lib/utils";
 
 const NAV: [string, DictionaryKey][] = [["#top", "nav.home"], ...NAV_LINKS];
@@ -158,7 +158,7 @@ export function CommandMenu() {
                 </Command.Group>
 
                 <Command.Group heading={t("cmdk.group.language")} className={group}>
-                  {LocaleEnum.options.map((loc) => (
+                  {LOCALES.map((loc) => (
                     <Item key={loc} icon={loc === "id" ? Languages : Globe} onSelect={run(() => setLocale(loc))}>
                       {loc === "id" ? "Bahasa Indonesia" : "English"}
                     </Item>

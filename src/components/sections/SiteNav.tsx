@@ -39,7 +39,8 @@ export function SiteNav() {
             {t(key)}
           </a>
         ))}
-        <button type="button" onClick={() => setLocale(other)} aria-label={t("nav.lang")} className="uppercase underline-offset-4 hover:underline">
+        <button type="button" onClick={() => setLocale(other)} className="uppercase underline-offset-4 hover:underline">
+          <span className="sr-only">{t("nav.lang")}: </span>
           {other}
         </button>
         <a
@@ -53,7 +54,8 @@ export function SiteNav() {
       </div>
 
       <div className="text-small flex items-center gap-4 lg:hidden">
-        <button type="button" onClick={() => setLocale(other)} aria-label={t("nav.lang")} className="h-11 uppercase">
+        <button type="button" onClick={() => setLocale(other)} className="h-11 uppercase">
+          <span className="sr-only">{t("nav.lang")}: </span>
           {other}
         </button>
         <button type="button" onClick={() => setOpen(true)} aria-expanded={open} aria-controls="nav-sheet" className="h-11 font-medium">

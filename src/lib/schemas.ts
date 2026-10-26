@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { LOCALES, PROJECT_TYPES, TIMELINES } from "@/lib/enums";
 
-export const LocaleEnum = z.enum(["id", "en"]);
+export const LocaleEnum = z.enum(LOCALES);
 
 export const LocalizedTextSchema = z.object({
   id: z.string().min(1),
@@ -60,14 +61,9 @@ export const CTAInquiryPayloadSchema = z.object({
   clientName: z.string().min(2),
   clientEmail: z.email(),
   companyOrBrand: z.string().min(2),
-  selectedProjectType: z.enum([
-    "FULL_ECOSYSTEM_WEB_AND_CMS",
-    "HIGH_CRAFT_WEB_EXPERIENCE",
-    "CUSTOM_SAAS_OR_MARKETPLACE",
-    "DESIGN_SYSTEM_AND_UIUX_OVERHAUL",
-  ]),
+  selectedProjectType: z.enum(PROJECT_TYPES),
   selectedPillars: z.array(DisciplinePillarEnum).min(1),
-  targetTimeline: z.enum(["URGENT_2_4_WEEKS", "STANDARD_1_2_MONTHS", "ENTERPRISE_3_MONTHS_PLUS"]),
+  targetTimeline: z.enum(TIMELINES),
   projectScopeNotes: z.string().min(20).max(1500),
 });
 

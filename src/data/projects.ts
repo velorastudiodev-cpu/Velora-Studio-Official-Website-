@@ -1,9 +1,9 @@
-import { z } from "zod";
-import { ProjectSchema } from "@/lib/schemas";
+import type { ProjectItem } from "@/lib/schemas";
 
 // Copy and figures follow the live sites (screenshots in /website-screenshots). Figures quoted from a
 // client's own site are marked as such in their labels; stacks are the owner's own listing.
-const seed = [
+// Validated against ProjectSchema in src/data/data.test.ts, not in the browser.
+export const projects: ProjectItem[] = [
   {
     id: "VEL-001",
     title: {
@@ -103,6 +103,4 @@ const seed = [
     ],
     links: { liveDemo: "https://dzikri-mount-guide.vercel.app" },
   },
-] satisfies z.input<typeof ProjectSchema>[];
-
-export const projects = z.array(ProjectSchema).length(3).parse(seed);
+];

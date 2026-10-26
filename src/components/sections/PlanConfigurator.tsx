@@ -6,11 +6,10 @@ import { useLanguage } from "@/context/LanguageContext";
 import { whatsappLink } from "@/data/contact";
 import { pillars } from "@/data/pillars";
 import { projects } from "@/data/projects";
-import { CTAInquiryPayloadSchema, type DisciplinePillar } from "@/lib/schemas";
+import { PROJECT_TYPES as TYPES, TIMELINES } from "@/lib/enums";
+import type { DisciplinePillar } from "@/lib/schemas";
 import { buildBlueprint, cn, SPRING, type ProjectType, type Timeline } from "@/lib/utils";
 
-const TYPES = CTAInquiryPayloadSchema.shape.selectedProjectType.options;
-const TIMELINES = CTAInquiryPayloadSchema.shape.targetTimeline.options;
 
 const legend = "text-small font-medium";
 const field =
@@ -179,8 +178,8 @@ export function PlanConfigurator() {
                 {bp.phases === 1 ? t("plan.oneRelease") : t("plan.manyReleases")}
               </p>
 
-              <dl className="mt-10 grid gap-8 sm:grid-cols-2">
-                <div>
+              <dl className="mt-10 grid content-start gap-8 sm:grid-cols-2">
+                <div className="sm:row-span-3">
                   <dt className={legend}>{t("plan.deliverables")}</dt>
                   <dd className="mt-2">
                     <ul className="space-y-1.5">
@@ -190,33 +189,31 @@ export function PlanConfigurator() {
                     </ul>
                   </dd>
                 </div>
-                <div className="space-y-8">
-                  <div>
-                    <dt className={legend}>{t("plan.stack")}</dt>
-                    <dd className="mt-2">{bp.stack.join(", ")}</dd>
-                  </div>
-                  <div>
-                    <dt className={legend}>{t("plan.lighthouse")}</dt>
-                    <dd className="tabular mt-2">{bp.lighthouse}</dd>
-                  </div>
-                  {bp.reference.length > 0 && (
-                    <div>
-                      <dt className={legend}>{t("plan.reference")}</dt>
-                      <dd className="mt-2 flex flex-wrap gap-x-4">
-                        {bp.reference.map((id) => {
-                          const p = projects.find((x) => x.id === id);
-                          return (
-                            p && (
-                              <a key={id} href={`#${p.slug}`} className="underline underline-offset-4 hover:text-violet">
-                                {l(p.title).split(" — ")[0]}
-                              </a>
-                            )
-                          );
-                        })}
-                      </dd>
-                    </div>
-                  )}
+                <div>
+                  <dt className={legend}>{t("plan.stack")}</dt>
+                  <dd className="mt-2">{bp.stack.join(", ")}</dd>
                 </div>
+                <div>
+                  <dt className={legend}>{t("plan.lighthouse")}</dt>
+                  <dd className="tabular mt-2">{bp.lighthouse}</dd>
+                </div>
+                {bp.reference.length > 0 && (
+                  <div>
+                    <dt className={legend}>{t("plan.reference")}</dt>
+                    <dd className="mt-2 flex flex-wrap gap-x-4">
+                      {bp.reference.map((id) => {
+                        const p = projects.find((x) => x.id === id);
+                        return (
+                          p && (
+                            <a key={id} href={`#${p.slug}`} className="underline underline-offset-4 hover:text-violet">
+                              {l(p.title).split(" — ")[0]}
+                            </a>
+                          )
+                        );
+                      })}
+                    </dd>
+                  </div>
+                )}
               </dl>
             </div>
           </div>
@@ -228,7 +225,6 @@ export function PlanConfigurator() {
         href={whatsappLink(message)}
         target="_blank"
         rel="noreferrer"
-        aria-label={t("band.label")}
         data-inspector="CTA band · one word"
         className="group relative flex min-h-[46svh] flex-col justify-between gap-10 overflow-hidden bg-lime text-lime-ink transition-colors duration-150 hover:bg-ink hover:text-lime focus-visible:bg-ink focus-visible:text-lime focus-visible:outline-none lg:min-h-[60svh]"
       >

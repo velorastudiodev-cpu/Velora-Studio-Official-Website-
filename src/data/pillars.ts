@@ -1,9 +1,9 @@
-import { z } from "zod";
-import { CapabilityPillarSchema } from "@/lib/schemas";
+import type { CapabilityPillar } from "@/lib/schemas";
 
 // taste-skill-ignore: indexCode is schema data, printed only by the CLI `pillars` command.
 
-const seed = [
+// Validated against CapabilityPillarSchema in src/data/data.test.ts, not in the browser.
+export const pillars: CapabilityPillar[] = [
   {
     id: "UI_UX_DESIGN",
     indexCode: "01", // taste-skill-ignore
@@ -76,6 +76,4 @@ const seed = [
     coreStack: ["PostgreSQL", "Redis", "Zod", "Service Workers"],
     benchmarkMetric: "0.00% slot conflicts · 100% ledger accuracy",
   },
-] satisfies z.input<typeof CapabilityPillarSchema>[];
-
-export const pillars = z.array(CapabilityPillarSchema).length(4).parse(seed);
+];

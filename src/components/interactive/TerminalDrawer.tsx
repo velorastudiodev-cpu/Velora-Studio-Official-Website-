@@ -10,7 +10,7 @@ import type { DictionaryKey } from "@/data/dictionaries";
 import { pillars } from "@/data/pillars";
 import { projects } from "@/data/projects";
 import { isTyping, useVeloraEvent } from "@/lib/events";
-import { LocaleEnum } from "@/lib/schemas";
+import { LOCALES } from "@/lib/enums";
 import { SPRING } from "@/lib/utils";
 
 // ANSI Shadow "VELORA". Rendered in one system mono stack so the box glyphs line up.
@@ -172,10 +172,10 @@ export function TerminalDrawer() {
         );
       }
       case "lang": {
-        const parsed = LocaleEnum.safeParse(arg.toLowerCase());
-        if (!parsed.success) return print(err(`${t("terminal.usage")} lang <id|en>`));
-        setLocale(parsed.data);
-        return print(out(`${t("terminal.langSet")} ${parsed.data}`));
+        const loc = LOCALES.find((l) => l === arg.toLowerCase());
+        if (!loc) return print(err(`${t("terminal.usage")} lang <id|en>`));
+        setLocale(loc);
+        return print(out(`${t("terminal.langSet")} ${loc}`));
       }
       case "inspector":
         if (arg !== "on" && arg !== "off") return print(err(`${t("terminal.usage")} inspector <on|off>`));

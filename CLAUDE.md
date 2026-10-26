@@ -24,7 +24,7 @@ deviation and why in the phase report.
   (primary) + mailto need only name + notes; the API form needs the full Zod schema and only renders when
   RESEND_API_KEY is set (route returns 503 otherwise; optional INQUIRY_FROM for a verified sender).
   Cross-island actions go through window events (src/lib/events.ts). Command palette is cmdk inside our own
-  motion modal (not cmdk's Radix dialog). Unit tests: `npm test` (tsx + node:test, src/lib/utils.test.ts).
+  motion modal (not cmdk's Radix dialog). Unit tests: `npm test` (tsx + node:test, src/**/*.test.ts).
 - *.vercel.app is blocked by this cloud environment's network policy: no live-site screenshots or
   Lighthouse runs yet.
 
@@ -40,6 +40,19 @@ deviation and why in the phase report.
   Kept: CLI (~), Cmd+K, Alt+I inspector, blueprint calculator, /api/inquiry.
 - Gate: taste lint 0 FAIL; inspect.mjs (CHROME_PATH needs a --no-sandbox wrapper as root) 0 FAIL,
   2 WARN (no real photos / no footage).
+
+## Phase 6: real screenshots, performance, SEO
+- Owner's screenshots live in /website-screenshots (git, not deployed); WebP crops in public/work/. The live
+  sites differ from the PRD: VEL-001 is "DINASTI Barbershop" (Luragung, Kuningan; WhatsApp consultation, no
+  online booking), VEL-002 a Google-sign-in admin dashboard (only its login is visible), VEL-003 "Dzikri
+  Mountain Guide" on Ciremai (trip cost calculator, WhatsApp booking, 30% deposit). projects.ts follows the sites;
+  PRD fiction (QRIS slot lock, chair schedule sync, Rinjani, +64% etc.) is gone.
+- Zod no longer ships to the browser: enums in src/lib/enums.ts, seed data validated in src/data/data.test.ts.
+  CLI/Cmd+K/Inspector load lazily (LazyOverlays). First load 205 → 179 kB.
+- SEO: metadataBase from NEXT_PUBLIC_SITE_URL / VERCEL_PROJECT_PRODUCTION_URL (src/lib/site.ts), OG image
+  (Archivo Narrow fetched at build, falls back to default font), robots, sitemap, JSON-LD, skip link;
+  htmlLimitedBots: /.*/ keeps metadata in <head>.
+- Lighthouse (prod build, local): desktop 100/100/100/100, mobile 96/100/100/100.
 
 ## Owner's live projects (wire in at the project-matrix stage)
 - VEL-001 client web: https://ikbar-barbershop.vercel.app

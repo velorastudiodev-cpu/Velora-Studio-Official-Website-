@@ -1,4 +1,4 @@
-import { DictionarySchema, type Locale, type LocalizedText } from "@/lib/schemas";
+import type { Locale, LocalizedText } from "@/lib/schemas";
 
 const seed = {
   // Navigation
@@ -9,6 +9,7 @@ const seed = {
   "nav.menu": { id: "Menu", en: "Menu" },
   "nav.close": { id: "Tutup", en: "Close" },
   "nav.lang": { id: "Ganti ke English", en: "Switch to Bahasa Indonesia" },
+  "nav.skip": { id: "Lewati ke konten", en: "Skip to content" },
   "nav.home": { id: "Velora Studio Dev, ke awal halaman", en: "Velora Studio Dev, back to top" },
 
   // Hero: one sentence split by the frame
@@ -163,8 +164,6 @@ const seed = {
   "cmdk.action.live": { id: "Buka situs", en: "Visit site" },
   "cmdk.copied": { id: "Email disalin", en: "Email copied" },
 } satisfies Record<string, LocalizedText>;
-
-DictionarySchema.parse(seed);
 
 export type DictionaryKey = keyof typeof seed;
 export const dictionary: Readonly<Record<DictionaryKey, LocalizedText>> = seed;

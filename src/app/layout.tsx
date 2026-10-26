@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Geist_Mono } from "next/font/google"; // taste-skill-ignore: mono is for the CLI only
 import { cookies, headers } from "next/headers";
-import { InspectorOverlay } from "@/components/grid/InspectorOverlay";
-import { CommandMenu } from "@/components/interactive/CommandMenu";
-import { TerminalDrawer } from "@/components/interactive/TerminalDrawer";
+import { LazyOverlays } from "@/components/interactive/LazyOverlays";
 import { LOCALE_COOKIE } from "@/context/LanguageContext";
 import { LocaleEnum, type Locale } from "@/lib/schemas";
+import { SITE_URL } from "@/lib/site";
+import { translate } from "@/data/dictionaries";
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -22,11 +22,18 @@ const geistMono = Geist_Mono({ // taste-skill-ignore: real terminal
   subsets: ["latin"],
 });
 
+const title = "Velora Studio Dev: website & software, dari sketsa sampai server";
+const description =
+  "Velora Studio Dev merancang dan membangun website, dashboard, dan aplikasi untuk bisnis. Satu orang, dari desain sampai kode.";
+
 export const metadata: Metadata = {
-  title: "Velora Studio Dev: website & software, dari sketsa sampai server",
-  description:
-    "Velora Studio Dev merancang dan membangun website, dashboard, dan aplikasi untuk bisnis. Satu orang, dari desain sampai kode.",
+  metadataBase: new URL(SITE_URL),
+  title,
+  description,
+  alternates: { canonical: "/" },
   icons: { icon: "/brand/velora-logo-mark.svg" },
+  openGraph: { type: "website", siteName: "Velora Studio Dev", title, description, locale: "id_ID", alternateLocale: ["en_US"], url: "/" },
+  twitter: { card: "summary_large_image", title, description },
 };
 
 export const viewport: Viewport = {
@@ -56,11 +63,12 @@ export default async function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
       <body>
+        <a href="#hero-title" className="sr-only z-[100] bg-lime px-4 py-3 font-medium text-lime-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
+          {translate(locale, "nav.skip")}
+        </a>
         <Providers locale={locale}>
           {children}
-          <InspectorOverlay />
-          <TerminalDrawer />
-          <CommandMenu />
+          <LazyOverlays />
         </Providers>
       </body>
     </html>

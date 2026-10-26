@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx --test src/**/*.test.ts"
+    "test": "tsx --tsconfig tsconfig.json --test src/**/*.test.ts"
   },
   "dependencies": {
     "clsx": "^2.1.1",
