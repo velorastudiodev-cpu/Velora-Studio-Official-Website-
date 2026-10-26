@@ -1,0 +1,60 @@
+<template>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("assets/fonts/archivo-latin.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "Archivo", sans-serif; color: #0b0b0c; }
+    #root .fld { position: absolute; inset: 0; }
+    #root .h { opacity: 0; }
+    #root .d { font-weight: 800; font-stretch: 62%; text-transform: uppercase; line-height: 0.86; letter-spacing: -0.01em; margin: 0; }
+    #root .q { font-weight: 500; font-size: 48px; line-height: 1.25; margin: 0; }
+    #root .ln { position: absolute; left: 72px; right: 72px; }
+    #root .w { display: inline-block; }
+    #root .mask { display: inline-block; overflow: hidden; padding: 0.08em 0; margin: -0.08em 0; vertical-align: top; }
+    #root .paper { background: #f0f0ef; } #root .paper2 { background: #e3e3e1; } #root .ink { background: #0b0b0c; color: #f0f0ef; }
+    #root .violet { background: #5a4cc8; color: #f0f0ef; } #root .lime { background: #def915; color: #0b0b0c; }
+    #root .cv { color: #5a4cc8; } #root .cm { color: #a9a9a6; } #root .cmp { color: #555553; }
+    #root .stk { position: absolute; left: 72px; right: 72px; top: 200px; height: 1100px; display: grid; align-content: center; justify-items: start; }
+    #s9-name { top: 200px; font-size: 300px; white-space: nowrap; }
+    .s9-ch { display: inline-block; }
+    #s9-full { top: 505px; font-size: 56px; font-weight: 700; }
+    #s9-role { top: 585px; font-size: 42px; }
+    #s9-city { top: 645px; font-size: 42px; }
+    #s9-tile { position: absolute; left: 72px; top: 740px; width: 936px; height: 580px; background: #0b0b0c; overflow: hidden; }
+    #s9-mark { position: absolute; left: 318px; top: 70px; width: 300px; height: 245px; }
+    #s9-q { position: absolute; left: 48px; right: 48px; top: 380px; color: #f0f0ef; font-size: 46px; }
+  </style>
+  <div data-hf-id="hf-0w2b" id="root" data-composition-id="s9" data-width="1080" data-height="1920">
+    <div data-hf-id="hf-awli" id="s9-a" class="fld ink"><p data-hf-id="hf-gugd" class="stk"><span data-hf-id="hf-nblx" class="d s9-aw" style="font-size:242px">Dibangun</span><span data-hf-id="hf-sbk9" class="d s9-aw" style="font-size:440px">oleh</span></p></div>
+    <div data-hf-id="hf-6svk" id="s9-v" class="fld violet h">
+      <h2 data-hf-id="hf-ljgh" id="s9-name" class="ln d"><span data-hf-id="hf-i7dm" class="s9-ch">A</span><span data-hf-id="hf-wwpn" class="s9-ch">f</span><span data-hf-id="hf-ux6i" class="s9-ch">a</span><span data-hf-id="hf-2h01" class="s9-ch">t</span><span data-hf-id="hf-r38e" class="s9-ch">a</span><span data-hf-id="hf-rhjf" class="s9-ch">a</span></h2>
+      <p data-hf-id="hf-eryb" id="s9-full" class="ln q">Ahmad Afataa Kusdianto</p>
+      <p data-hf-id="hf-3t6r" id="s9-role" class="ln q">Founder · desainer UI/UX &amp; engineer</p>
+      <p data-hf-id="hf-iarx" id="s9-city" class="ln q">Jakarta · ngoding sejak dua tahun lalu</p>
+      <div data-hf-id="hf-1dum" id="s9-tile">
+        <svg data-hf-id="hf-oh7w" id="s9-mark" viewBox="0 0 507 414">
+          <path data-hf-id="hf-99t9" d="M0 0H144L307 292H163ZM46.6 32L173 262H259L132.6 32Z" fill="#f0f0ef" fill-rule="evenodd"/>
+          <path data-hf-id="hf-2aag" d="M338 0H507L287 414H224L166 302Z" fill="#5A4CC8"/>
+          <path data-hf-id="hf-t1zb" d="M338 0H507L354 94Z" fill="#5A4CC8"/><path data-hf-id="hf-psdq" d="M354 94L507 0L411 180Z" fill="#4E42AD"/><path data-hf-id="hf-668m" d="M354 94L411 180L332 180Z" fill="#3F358D"/>
+          <path data-hf-id="hf-4eig" d="M338 0L354 94L332 180H235Z" fill="#5B4DC6"/><path data-hf-id="hf-mnrc" d="M235 180H332L262 330L166 302Z" fill="#443D9C"/><path data-hf-id="hf-o3nw" d="M332 180H411L287 414L262 330Z" fill="#5B4DC3"/><path data-hf-id="hf-prxp" d="M166 302L262 330L287 414H224Z" fill="#5047B7"/>
+        </svg>
+        <p data-hf-id="hf-2ozg" id="s9-q" class="q"><span data-hf-id="hf-5aef" class="w s9-qw">Satu orang yang bisa diajak bicara</span> <span data-hf-id="hf-eb87" class="w s9-qw">dari ide pertama sampai rilis.</span></p>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo(".s9-aw", { opacity: 0, filter: "blur(10px)", scale: 1.15 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.3, stagger: 0.25, ease: "expo.out" }, 0);
+    tl.set("#s9-v", { opacity: 1 }, 1.0); tl.set("#s9-a", { opacity: 0 }, 1.5);
+    tl.fromTo("#s9-v", { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(120% at 50% 50%)", duration: 0.45, ease: "power2.inOut" }, 1.0);
+    // The name, letter by letter.
+    tl.fromTo(".s9-ch", { opacity: 0.25, filter: "blur(8px)", yPercent: 20 }, { opacity: 1, filter: "blur(0px)", yPercent: 0, duration: 0.25, stagger: 0.06, ease: "expo.out" }, 1.1);
+    tl.fromTo("#s9-name", { scale: 1.05 }, { scale: 1, duration: 0.3, ease: "expo.out", transformOrigin: "0% 50%" }, 1.5);
+    tl.fromTo("#s9-name", { x: 0 }, { keyframes: { x: [0, -12, 9, -4, 0] }, duration: 0.25, ease: "none" }, 1.5);
+    tl.fromTo(["#s9-full", "#s9-role", "#s9-city"], { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, stagger: 0.25 }, 2.0);
+    tl.fromTo("#s9-tile", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", duration: 0.6, ease: "expo.out" }, 2.5);
+    tl.fromTo("#s9-mark", { rotation: -8, scale: 0.9 }, { rotation: 4, scale: 1.04, duration: 6.5, ease: "none" }, 2.5);
+    tl.fromTo(".s9-qw", { opacity: 0, color: "#6b6b6b" }, { opacity: 1, color: "#f0f0ef", duration: 0.25, stagger: 0.4 }, 4.0);
+    // Zoom through the ink tile into the call to action.
+    tl.to("#s9-tile", { scale: 4, duration: 0.5, ease: "power3.in", transformOrigin: "50% 30%" }, 9.5);
+    window.__timelines["s9"] = tl;
+  </script>
+</template>

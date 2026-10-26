@@ -1,0 +1,74 @@
+<template>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("assets/fonts/archivo-latin.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "Archivo", sans-serif; color: #0b0b0c; }
+    #root .fld { position: absolute; inset: 0; }
+    #root .h { opacity: 0; }
+    #root .d { font-weight: 800; font-stretch: 62%; text-transform: uppercase; line-height: 0.86; letter-spacing: -0.01em; margin: 0; }
+    #root .q { font-weight: 500; font-size: 48px; line-height: 1.25; margin: 0; }
+    #root .ln { position: absolute; left: 72px; right: 72px; }
+    #root .w { display: inline-block; }
+    #root .mask { display: inline-block; overflow: hidden; padding: 0.08em 0; margin: -0.08em 0; vertical-align: top; }
+    #root .paper { background: #f0f0ef; } #root .paper2 { background: #e3e3e1; } #root .ink { background: #0b0b0c; color: #f0f0ef; }
+    #root .violet { background: #5a4cc8; color: #f0f0ef; } #root .lime { background: #def915; color: #0b0b0c; }
+    #root .cv { color: #5a4cc8; } #root .cm { color: #a9a9a6; } #root .cmp { color: #555553; }
+    #root .stk { position: absolute; left: 72px; right: 72px; top: 200px; height: 1100px; display: grid; align-content: center; justify-items: start; }
+    #s6-name { top: 210px; font-size: 200px; }
+    #s6-sub { top: 405px; font-size: 44px; color: #555553; }
+    #s6-card { position: absolute; left: 220px; top: 520px; width: 640px; height: 800px; }
+    #s6-card img { width: 100%; height: 100%; display: block; }
+    #s6-cur { position: absolute; left: 0; top: 0; width: 78px; height: 96px; }
+    #s6-m { top: 250px; font-size: 220px; }
+    #s6-roll { position: absolute; left: 72px; right: 72px; top: 470px; height: 172px; overflow: hidden; }
+    .s6-r { opacity: 0; position: absolute; left: 0; top: 0; font-size: 196px; white-space: nowrap; }
+    #s6-l1 { top: 700px; } #s6-l2 { top: 780px; }
+  </style>
+  <div data-hf-id="hf-az72" id="root" data-composition-id="s6" data-width="1080" data-height="1920">
+    <div data-hf-id="hf-5uvg" id="s6-t" class="fld ink"><p data-hf-id="hf-gugd" class="stk"><span data-hf-id="hf-vdsp" class="mask"><span data-hf-id="hf-g49o" class="d w s6-tw" style="font-size:230px">Software</span></span><span data-hf-id="hf-2y5p" class="mask"><span data-hf-id="hf-3fr1" class="d w s6-tw" style="font-size:169px">Development</span></span></p></div>
+    <div data-hf-id="hf-gv6x" id="s6-a" class="fld paper2 h">
+      <p data-hf-id="hf-nuh0" id="s6-name" class="ln d"><span data-hf-id="hf-452s" class="mask"><span data-hf-id="hf-k3f0" class="w" id="s6-n">Dashboard</span></span></p>
+      <p data-hf-id="hf-lwio" id="s6-sub" class="ln q">Khusus pemilik DINASTI</p>
+      <div data-hf-id="hf-j1hd" id="s6-card"><img data-hf-id="hf-ttzt" src="assets/img/dashboard-card.webp" alt=""></div>
+      <svg data-hf-id="hf-4v9e" id="s6-cur" viewBox="0 0 26 32"><path data-hf-id="hf-ieqd" d="M2 2v24l6.5-6.2 4.3 9.8 4.2-1.9-4.2-9.6H22Z" fill="#0b0b0c" stroke="#f0f0ef" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+    <div data-hf-id="hf-p7ay" id="s6-b" class="fld ink h">
+      <p data-hf-id="hf-iyxx" id="s6-m" class="ln d">Mengatur</p>
+      <div data-hf-id="hf-sxxa" id="s6-roll">
+        <p data-hf-id="hf-98c8" class="d s6-r">Kas barber</p><p data-hf-id="hf-b283" class="d s6-r">Margin</p><p data-hf-id="hf-jtqb" class="d s6-r">Chart</p><p data-hf-id="hf-fwy7" class="d s6-r">Foto</p><p data-hf-id="hf-ur1w" class="d s6-r">Video</p>
+        <p data-hf-id="hf-iejo" class="d s6-r">Lokasi</p><p data-hf-id="hf-o8zg" class="d s6-r">Jam buka</p><p data-hf-id="hf-28vj" class="d s6-r">WhatsApp</p><p data-hf-id="hf-uv1v" class="d s6-r">Instagram</p>
+        <p data-hf-id="hf-awdq" class="d s6-r" style="color:#def915">tanpa kode.</p>
+      </div>
+      <p data-hf-id="hf-0lpc" id="s6-l1" class="ln q cm">Kas, margin &amp; chart untuk pemilik.</p>
+      <p data-hf-id="hf-lgdw" id="s6-l2" class="ln q cm">Foto, video, lokasi, jam, WA, IG di website.</p>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo(".s6-tw", { yPercent: 120 }, { yPercent: 0, duration: 0.55, stagger: 0.12, ease: "expo.out" }, 0);
+    tl.set("#s6-a", { opacity: 1 }, 1.5); tl.set("#s6-t", { opacity: 0 }, 1.5);
+    tl.fromTo("#s6-n", { yPercent: 120 }, { yPercent: 0, duration: 0.5, ease: "expo.out" }, 1.5);
+    tl.fromTo("#s6-sub", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2 }, 1.8);
+    tl.fromTo("#s6-card", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", duration: 0.6, ease: "expo.out" }, 1.6);
+    // The cursor comes in from off-screen and signs in with Google.
+    tl.fromTo("#s6-cur", { x: 1150, y: 1500 }, { x: 520, y: 1040, duration: 0.75, ease: "power3.out" }, 2.2);
+    tl.fromTo("#s6-cur", { scale: 1 }, { keyframes: { scale: [1, 0.82, 1] }, duration: 0.18, ease: "none" }, 3.0);
+    tl.fromTo("#s6-card", { scale: 1 }, { keyframes: { scale: [1, 0.985, 1] }, duration: 0.18, ease: "none" }, 3.0);
+    // The card becomes the world: it grows past the frame into the dashboard's dark ground.
+    tl.to("#s6-cur", { opacity: 0, duration: 0.1 }, 3.2);
+    tl.to("#s6-card", { scale: 3.4, duration: 0.6, ease: "power3.in", transformOrigin: "50% 64%" }, 3.2);
+    tl.to(["#s6-name", "#s6-sub"], { opacity: 0, filter: "blur(12px)", duration: 0.25 }, 3.2);
+    tl.set("#s6-b", { opacity: 1 }, 4.0);
+    tl.fromTo("#s6-m", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18 }, 4.0);
+    // Slot roll through what the owner edits, landing on the point.
+    const rolls = gsap.utils.toArray("#s6-b .s6-r");
+    rolls.forEach((r, i) => {
+      const t = 4.25 + i * 0.25, last = i === rolls.length - 1;
+      tl.set(r, { opacity: 1 }, t);
+      tl.fromTo(r, { yPercent: 120 }, { yPercent: 0, duration: last ? 0.45 : 0.12, ease: last ? "expo.out" : "power2.out" }, t);
+      if (!last) { tl.to(r, { yPercent: -120, duration: 0.12, ease: "power2.in" }, t + 0.17); tl.set(r, { opacity: 0 }, t + 0.3); }
+    });
+    tl.fromTo("#s6-roll", { scale: 1 }, { keyframes: { scale: [1.06, 1] }, duration: 0.3, ease: "expo.out", transformOrigin: "0% 50%" }, 6.5);
+    tl.fromTo(["#s6-l1", "#s6-l2"], { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, stagger: 0.15 }, 6.75);
+    window.__timelines["s6"] = tl;
+  </script>
+</template>

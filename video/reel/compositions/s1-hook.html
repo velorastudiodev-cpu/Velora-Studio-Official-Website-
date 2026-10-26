@@ -1,0 +1,68 @@
+<template>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("assets/fonts/archivo-latin.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "Archivo", sans-serif; color: #0b0b0c; }
+    #root .fld { position: absolute; inset: 0; }
+    #root .h { opacity: 0; }
+    #root .d { font-weight: 800; font-stretch: 62%; text-transform: uppercase; line-height: 0.86; letter-spacing: -0.01em; margin: 0; }
+    #root .q { font-weight: 500; font-size: 48px; line-height: 1.25; margin: 0; }
+    #root .ln { position: absolute; left: 72px; right: 72px; }
+    #root .w { display: inline-block; }
+    #root .mask { display: inline-block; overflow: hidden; padding: 0.08em 0; margin: -0.08em 0; vertical-align: top; }
+    #root .paper { background: #f0f0ef; } #root .paper2 { background: #e3e3e1; } #root .ink { background: #0b0b0c; color: #f0f0ef; }
+    #root .violet { background: #5a4cc8; color: #f0f0ef; } #root .lime { background: #def915; color: #0b0b0c; }
+    #root .cv { color: #5a4cc8; } #root .cm { color: #a9a9a6; } #root .cmp { color: #555553; }
+    #root .stk { position: absolute; left: 72px; right: 72px; top: 200px; height: 1100px; display: grid; align-content: center; justify-items: start; }
+    #s1-desain { top: 270px; font-size: 300px; }
+    #s1-kode { top: 1030px; font-size: 300px; text-align: right; }
+    #s1-file { position: absolute; left: 470px; top: 560px; width: 140px; height: 140px; background: #5a4cc8; }
+    #s1-rev { top: 640px; left: 640px; font-size: 56px; font-weight: 600; }
+    #s1-rev b { font-weight: 800; font-stretch: 62%; font-size: 170px; display: block; line-height: .9; }
+  </style>
+  <div data-hf-id="hf-qmpn" id="root" data-composition-id="s1" data-width="1080" data-height="1920">
+    <div data-hf-id="hf-a2w5" id="s1-f0" class="fld paper"><h1 data-hf-id="hf-cxnu" id="s1-a" class="stk"><span data-hf-id="hf-8rrd" class="d" style="font-size:258px">Bisnismu</span><span data-hf-id="hf-s5bv" class="d" style="font-size:350px">keren.</span></h1></div>
+    <div data-hf-id="hf-y8cq" id="s1-f1" class="fld ink h"><h2 data-hf-id="hf-u0kd" class="stk"><span data-hf-id="hf-e03d" class="d s1-bw" style="font-size:263px">Website-</span><span data-hf-id="hf-lgtu" class="d s1-bw" style="font-size:440px">nya<span data-hf-id="hf-udif" class="cv">?</span></span></h2></div>
+    <div data-hf-id="hf-pkdv" id="s1-p1" class="fld violet h"><p data-hf-id="hf-gugd" class="stk"><span data-hf-id="hf-omj9" class="d" style="font-size:309px">Lambat</span><span data-hf-id="hf-x83s" class="d" style="font-size:316px">dibuka.</span></p></div>
+    <div data-hf-id="hf-j5gp" id="s1-p2" class="fld paper h"><p data-hf-id="hf-qtwh" class="stk"><span data-hf-id="hf-von1" class="d" style="font-size:190px">Berantakan</span><span data-hf-id="hf-4fwz" class="d" style="font-size:440px">di HP.</span></p></div>
+    <div data-hf-id="hf-pu2m" id="s1-p3" class="fld ink h"><p data-hf-id="hf-s0tk" class="stk"><span data-hf-id="hf-201s" class="d" style="font-size:381px">Susah</span><span data-hf-id="hf-tl1d" class="d" style="font-size:312px">diubah.</span></p></div>
+    <div data-hf-id="hf-efov" id="s1-p4" class="fld paper h"><p data-hf-id="hf-rmij" class="stk"><span data-hf-id="hf-3nh9" class="d" style="font-size:221px">Tim saling</span><span data-hf-id="hf-429m" class="d" style="font-size:284px">tunggu.</span></p></div>
+    <div data-hf-id="hf-rh7x" id="s1-pp" class="fld paper2 h">
+      <p data-hf-id="hf-qc0g" id="s1-desain" class="ln d">Desain</p>
+      <div data-hf-id="hf-cuf4" id="s1-file"></div>
+      <p data-hf-id="hf-57d4" id="s1-rev" class="ln">revisi ke-<b data-hf-id="hf-9hom" id="s1-n">1</b></p>
+      <p data-hf-id="hf-9e2e" id="s1-kode" class="ln d">Kode</p>
+    </div>
+    <div data-hf-id="hf-pnya" id="s1-f9" class="fld ink h"><h2 data-hf-id="hf-ovlv" id="s1-end" class="stk"><span data-hf-id="hf-sxgg" class="d s1-ew" style="font-size:253px">Ada cara</span><span data-hf-id="hf-ytnw" class="d s1-ew" style="font-size:440px;color:#def915">lain.</span></h2></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const on = (s, t) => tl.set(s, { opacity: 1 }, t);
+    const off = (s, t) => tl.set(s, { opacity: 0 }, t);
+    const slam = (s, t) => tl.fromTo(s, { scale: 1.08 }, { scale: 1, duration: 0.3, ease: "expo.out", transformOrigin: "50% 50%" }, t);
+    // Frame 0 is the thumbnail: the line is already there; it only settles, then the next line pushes in.
+    slam("#s1-a", 0);
+    tl.fromTo("#s1-a", { scale: 1 }, { scale: 1.06, duration: 0.5, ease: "power2.in" }, 0.4);
+    off("#s1-f0", 1.0); on("#s1-f1", 1.0);
+    tl.fromTo(".s1-bw", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, stagger: 0.12, ease: "power2.out" }, 1.0);
+    const pains = ["#s1-p1", "#s1-p2", "#s1-p3", "#s1-p4"];
+    pains.forEach((p, i) => {
+      const t = 2.0 + i * 0.5;
+      on(p, t); slam(p + " .stk", t);
+      // a one-beat glitch kick on each pain
+      tl.fromTo(p + " .stk", { x: 0 }, { keyframes: { x: [22, -14, 6, 0] }, duration: 0.14, ease: "none" }, t);
+      off(i ? pains[i - 1] : "#s1-f1", t);
+    });
+    off("#s1-p4", 4.0); on("#s1-pp", 4.0);
+    tl.fromTo("#s1-desain", { yPercent: -40, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.4, ease: "expo.out" }, 4.0);
+    tl.fromTo("#s1-kode", { yPercent: 40, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.4, ease: "expo.out" }, 4.05);
+    tl.fromTo("#s1-rev", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 4.15);
+    // The file ping-pongs between design and code; every arrival is another revision.
+    tl.fromTo("#s1-file", { y: 0 }, { keyframes: { y: [0, 340, 0, 340, 0, 340], easeEach: "power3.inOut" }, duration: 1.25, ease: "none" }, 4.25);
+    for (let i = 0; i < 5; i++) tl.set("#s1-n", { textContent: String(i + 2) }, 4.5 + i * 0.25);
+    tl.fromTo("#s1-pp", { x: 0 }, { keyframes: { x: [0, -18, 14, -10, 6, 0] }, duration: 0.25, ease: "none" }, 5.5);
+    off("#s1-pp", 6.0); on("#s1-f9", 6.0);
+    tl.fromTo(".s1-ew", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, stagger: 0.14, ease: "power2.out" }, 6.0);
+    tl.fromTo("#s1-end", { x: 0, filter: "blur(0px)", opacity: 1 }, { x: -320, filter: "blur(16px)", opacity: 0, duration: 0.2, ease: "power3.in" }, 6.85);
+    window.__timelines["s1"] = tl;
+  </script>
+</template>

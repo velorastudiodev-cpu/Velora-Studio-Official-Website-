@@ -80,3 +80,8 @@ deviation and why in the phase report.
 
 ## Gates (every phase)
 `npx tsc --noEmit` · `npm run lint` · `npm test` · `npm run build` — all must exit 0.
+
+## Video (video/)
+- 1:40 motion-graphics reel in HyperFrames: video/reel (9:16 source), `python3 make_169.py` builds video/reel-16x9
+  (git-ignored). Final MP4s in video/renders. Soundtrack is synthesised by video/reel/audio/build_audio.py
+  (no catalog music reachable from the cloud env); male VO is Kokoro am_onyx. video/ is excluded from Vercel and lint.

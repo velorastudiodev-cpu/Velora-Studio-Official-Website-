@@ -1,0 +1,66 @@
+<template>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("assets/fonts/archivo-latin.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "Archivo", sans-serif; color: #0b0b0c; }
+    #root .fld { position: absolute; inset: 0; }
+    #root .h { opacity: 0; }
+    #root .d { font-weight: 800; font-stretch: 62%; text-transform: uppercase; line-height: 0.86; letter-spacing: -0.01em; margin: 0; }
+    #root .q { font-weight: 500; font-size: 48px; line-height: 1.25; margin: 0; }
+    #root .ln { position: absolute; left: 72px; right: 72px; }
+    #root .w { display: inline-block; }
+    #root .mask { display: inline-block; overflow: hidden; padding: 0.08em 0; margin: -0.08em 0; vertical-align: top; }
+    #root .paper { background: #f0f0ef; } #root .paper2 { background: #e3e3e1; } #root .ink { background: #0b0b0c; color: #f0f0ef; }
+    #root .violet { background: #5a4cc8; color: #f0f0ef; } #root .lime { background: #def915; color: #0b0b0c; }
+    #root .cv { color: #5a4cc8; } #root .cm { color: #a9a9a6; } #root .cmp { color: #555553; }
+    #root .stk { position: absolute; left: 72px; right: 72px; top: 200px; height: 1100px; display: grid; align-content: center; justify-items: start; }
+    #s5-band { position: absolute; left: 0; right: 0; top: 0; height: 620px; z-index: 2; }
+    #s5-name { top: 186px; font-size: 260px; }
+    #s5-sub { top: 430px; font-size: 44px; }
+    #s5-facts { position: absolute; left: 72px; right: 72px; top: 506px; height: 92px; overflow: hidden; }
+    .s5-f { position: absolute; left: 0; top: 0; font-size: 100px; color: #def915; white-space: nowrap; }
+    #s5-win { position: absolute; left: 0; right: 0; top: 620px; bottom: 0; overflow: hidden; background: #0b0b0c; }
+    .s5-seg { position: absolute; left: 0; top: 0; width: 1080px; }
+  </style>
+  <div data-hf-id="hf-ejdb" id="root" data-composition-id="s5" data-width="1080" data-height="1920">
+    <div data-hf-id="hf-s11a" id="s5-t" class="fld violet"><p data-hf-id="hf-gugd" class="stk"><span data-hf-id="hf-mdau" class="d s5-tw" style="font-size:440px">Web</span><span data-hf-id="hf-9nen" class="d s5-tw" style="font-size:169px">Development</span></p></div>
+    <div data-hf-id="hf-hc4d" id="s5-case" class="fld ink h">
+      <div data-hf-id="hf-3qlw" id="s5-win">
+        <img data-hf-id="hf-42te" id="s5-g0" class="s5-seg" src="assets/img/dm-hero.jpg" alt="">
+        <img data-hf-id="hf-xklf" id="s5-g1" class="s5-seg h" src="assets/img/dm-gallery.jpg" alt="">
+        <img data-hf-id="hf-qfmt" id="s5-g2" class="s5-seg h" src="assets/img/dm-price.jpg" alt="">
+        <img data-hf-id="hf-1c7t" id="s5-g3" class="s5-seg h" src="assets/img/dm-loc.jpg" alt="">
+      </div>
+      <div data-hf-id="hf-b7i1" id="s5-band" class="violet">
+        <p data-hf-id="hf-d5fh" id="s5-name" class="ln d"><span data-hf-id="hf-vdsp" class="mask"><span data-hf-id="hf-hdj5" class="w" id="s5-n">Dinasti</span></span></p>
+        <p data-hf-id="hf-kjb4" id="s5-sub" class="ln q">Barbershop · Luragung, Kuningan</p>
+        <div data-hf-id="hf-shhv" id="s5-facts">
+          <p data-hf-id="hf-t7lu" id="s5-f0" class="d s5-f">Website klien · live</p>
+          <p data-hf-id="hf-ody7" id="s5-f1" class="d s5-f h">Galeri hasil cukur</p>
+          <p data-hf-id="hf-600y" id="s5-f2" class="d s5-f h">Harga transparan</p>
+          <p data-hf-id="hf-bi14" id="s5-f3" class="d s5-f h">Lokasi &amp; jam buka</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // Title whips in from the right.
+    tl.fromTo(".s5-tw", { x: 500, filter: "blur(16px)" }, { x: 0, filter: "blur(0px)", duration: 0.4, stagger: 0.1, ease: "expo.out" }, 0);
+    tl.set("#s5-case", { opacity: 1 }, 2.0); tl.set("#s5-t", { opacity: 0 }, 2.0);
+    tl.fromTo("#s5-band", { yPercent: -100 }, { yPercent: 0, duration: 0.45, ease: "expo.out" }, 2.0);
+    tl.fromTo("#s5-n", { yPercent: 120 }, { yPercent: 0, duration: 0.5, ease: "expo.out" }, 2.15);
+    tl.fromTo("#s5-sub", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2 }, 2.35);
+    // The real mobile page, one section per beat: scroll inside, hard cut with a vertical smear to the next.
+    const segs = [["#s5-g0", 925], ["#s5-g1", 2400], ["#s5-g2", 1300], ["#s5-g3", 1700]];
+    segs.forEach(([g, dist], i) => {
+      const t = 2.0 + i * 2.0, len = i === 3 ? 3.0 : 2.0;
+      if (i) { tl.set(g, { opacity: 1 }, t); tl.set(segs[i - 1][0], { opacity: 0 }, t); }
+      tl.fromTo(g, { y: 0 }, { y: -dist, duration: len, ease: "power2.inOut" }, t);
+      if (i) tl.fromTo(g, { filter: "blur(14px)" }, { filter: "blur(0px)", duration: 0.15 }, t);
+      const f = "#s5-f" + i;
+      if (i) { tl.set(f, { opacity: 1 }, t); tl.to("#s5-f" + (i - 1), { yPercent: -120, duration: 0.2, ease: "power3.in" }, t - 0.2); tl.set("#s5-f" + (i - 1), { opacity: 0 }, t); }
+      tl.fromTo(f, { yPercent: 120 }, { yPercent: 0, duration: 0.4, ease: "expo.out" }, t + (i ? 0.1 : 0.4));
+    });
+    window.__timelines["s5"] = tl;
+  </script>
+</template>
